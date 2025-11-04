@@ -1,0 +1,342 @@
+{
+  "lp1-i1": {
+    "id": "lp1-i1",
+    "type": "listening-part-1",
+    "audioSrc": "http://127.0.0.1:5000/static/audios/teil1/listening-part-1-instance1.mp3",
+    "instruction": "Sie hören nun fünf kurze Texte. Sie hören jeden Text zweimal. Zu jedem Text lösen Sie zwei Aufgaben. Wählen Sie bei jeder Aufgabe die richtige Lösung.",
+    "example": {
+      "context": "Sie hören eine Nachricht auf dem Anrufbeantworter.",
+      "preReadInstruction": "Lesen Sie zuerst das Beispiel. Dazu haben Sie 10 Sekunden Zeit.",
+      "speakerGender": "female",
+      "transcript": "Hallo Jan, hier ist Katja. Ich rufe wegen unserer Verabredung heute Abend an. Ich schaffe es leider nicht um 19 Uhr, mein Zug hat Verspätung. Können wir uns stattdessen um 20 Uhr direkt am Kino treffen? Das wäre super. Ruf mich kurz zurück, ob das für dich in Ordnung ist. Bis später!",
+      "questions": [
+        {
+          "id": "lp1-i1-e1-q1",
+          "type": "true-false",
+          "statement": "Katja möchte das Treffen auf eine spätere Uhrzeit verschieben.",
+          "correctAnswer": true,
+          "explanation": ""
+        },
+        {
+          "id": "lp1-i1-e1-q2",
+          "type": "multiple-choice",
+          "question": "Warum kann Katja nicht pünktlich sein?",
+          "options": [
+            "Sie steht im Stau.",
+            "Sie hat Probleme mit dem Zug.",
+            "Sie muss länger arbeiten."
+          ],
+          "correctAnswerIndex": 1,
+          "explanation": ""
+        }
+      ]
+    },
+    "textBlocks": [
+      {
+        "context": "Sie hören eine automatische Telefonauskunft.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 1 und 2. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "male",
+        "transcript": "Herzlich willkommen beim City-Kino. Für Programminformationen drücken Sie die Eins, für Reservierungen die Zwei. Achtung, eine wichtige Information für heute Abend: Die Vorstellung des Films 'Sterne der Nacht' um 20 Uhr ist leider komplett ausverkauft. Es gibt keine Karten mehr an der Abendkasse. Aus technischen Gründen muss die Spätvorstellung desselben Films von 22:30 Uhr auf 23:00 Uhr verschoben werden. Wir bitten um Ihr Verständnis.",
+        "questions": [
+          {
+            "id": "lp1-i1-b1-q1",
+            "type": "true-false",
+            "statement": "Für die 20-Uhr-Vorstellung von 'Sterne der Nacht' gibt es noch Tickets.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Der Sprecher sagt: 'Die Vorstellung des Films 'Sterne der Nacht' um 20 Uhr ist leider komplett ausverkauft. Es gibt keine Karten mehr an der Abendkasse.'"
+          },
+          {
+            "id": "lp1-i1-b1-q2",
+            "type": "multiple-choice",
+            "question": "Was wird über die Spätvorstellung gesagt?",
+            "options": [
+              "Sie findet nicht statt.",
+              "Sie beginnt eine halbe Stunde später.",
+              "Man kann für sie keine Karten mehr kaufen."
+            ],
+            "correctAnswerIndex": 1,
+            "explanation": "Die richtige Antwort ist b. Der Sprecher sagt: '...muss die Spätvorstellung desselben Films von 22:30 Uhr auf 23:00 Uhr verschoben werden.' Das ist eine Verschiebung um eine halbe Stunde. Antwort a ist falsch, da der Film stattfindet. Antwort c ist falsch, weil die Auskunft, dass der Film ausverkauft ist, sich auf die 20-Uhr-Vorstellung bezog, nicht auf die Spätvorstellung."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören den Wetterbericht im Radio.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 3 und 4. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "female",
+        "transcript": "Und hier der Wetterbericht für morgen, Samstag. Der Tag beginnt im ganzen Land noch freundlich mit viel Sonnenschein. Die Temperaturen steigen bis zum Mittag auf angenehme 22 Grad. Genießen Sie den Vormittag, denn ab circa 14 Uhr ziehen von Westen her dichte Wolken auf. Am späten Nachmittag müssen Sie dann mit starken Regenschauern und einzelnen Gewittern rechnen. Bleiben Sie also am besten im Trockenen. Die Temperaturen sinken dann schnell wieder unter 15 Grad.",
+        "questions": [
+          {
+            "id": "lp1-i1-b2-q3",
+            "type": "true-false",
+            "statement": "Das Wetter bleibt den ganzen Samstag über gut.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Die Sprecherin sagt, man solle den Vormittag genießen, 'denn ab circa 14 Uhr ziehen von Westen her dichte Wolken auf. Am späten Nachmittag müssen Sie dann mit starken Regenschauern und einzelnen Gewittern rechnen.'"
+          },
+          {
+            "id": "lp1-i1-b2-q4",
+            "type": "multiple-choice",
+            "question": "Was empfiehlt die Sprecherin für den Nachmittag?",
+            "options": [
+              "Man sollte einen Ausflug machen.",
+              "Man sollte drinnen bleiben.",
+              "Man sollte leichte Kleidung tragen."
+            ],
+            "correctAnswerIndex": 1,
+            "explanation": "Die richtige Antwort ist b. Die Sprecherin sagt: 'Bleiben Sie also am besten im Trockenen.' Dies ist eine klare Empfehlung, drinnen zu bleiben. Antwort a ist falsch, da das Wetter schlecht wird. Antwort c ist falsch, da die Temperaturen 'schnell wieder unter 15 Grad' sinken, was kühl ist."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Nachricht auf der Mailbox.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 5 und 6. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "male",
+        "transcript": "Hallo Sarah, hier ist Ben von der Uni. Du, ich habe eine Frage zu dem Referat für das Geschichtsseminar, das wir zusammen machen. Ich habe meinen Teil fast fertig, aber ich finde die E-Mail vom Professor nicht mehr mit den genauen Vorgaben zur Länge. Sollten das 15 oder 20 Minuten sein? Kannst du mir das bitte kurz per Nachricht schreiben, wenn du es weißt? Dann kann ich es heute Abend fertig machen. Danke dir!",
+        "questions": [
+          {
+            "id": "lp1-i1-b3-q5",
+            "type": "true-false",
+            "statement": "Ben ruft an, um sich mit Sarah für das Referat zu treffen.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Ben ruft nicht an, um ein Treffen zu vereinbaren. Er hat eine spezifische Frage: '...ich finde die E-Mail vom Professor nicht mehr mit den genauen Vorgaben zur Länge.' Er möchte eine Information, kein Treffen."
+          },
+          {
+            "id": "lp1-i1-b3-q6",
+            "type": "multiple-choice",
+            "question": "Welche Information braucht Ben von Sarah?",
+            "options": [
+              "Wie lange die Präsentation sein soll.",
+              "Wann das Referat stattfindet.",
+              "Die E-Mail-Adresse des Professors."
+            ],
+            "correctAnswerIndex": 0,
+            "explanation": "Die richtige Antwort ist a. Ben fragt explizit nach der Dauer der Präsentation: 'Sollten das 15 oder 20 Minuten sein?' Er fragt nicht nach dem Datum (b) oder der E-Mail-Adresse (c), sondern nach den 'Vorgaben zur Länge'."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Durchsage am Bahnhof.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 7 und 8. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "female",
+        "transcript": "Achtung, an Gleis 11. Der Intercity-Express 599 nach Hamburg-Altona mit planmäßiger Abfahrt um 16:45 Uhr wird heute circa 20 Minuten später abfahren. Grund hierfür ist eine technische Störung am Zug. Wir informieren Sie, sobald der Zug bereitgestellt wird. Reisende nach Berlin beachten bitte: Ihr Zug, der ICE 801, fährt heute nicht von Gleis 12, sondern gegenüber von Gleis 13. Ich wiederhole: Der ICE nach Berlin fährt heute von Gleis 13.",
+        "questions": [
+          {
+            "id": "lp1-i1-b4-q7",
+            "type": "true-false",
+            "statement": "Der Zug nach Hamburg fährt pünktlich ab.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Die Sprecherin kündigt eine Verspätung an: 'Der Intercity-Express 599 nach Hamburg-Altona ... wird heute circa 20 Minuten später abfahren.'"
+          },
+          {
+            "id": "lp1-i1-b4-q8",
+            "type": "multiple-choice",
+            "question": "Welche Information ist für Reisende nach Berlin wichtig?",
+            "options": [
+              "Ihr Zug hat ebenfalls Verspätung.",
+              "Ihr Zug fällt heute aus.",
+              "Ihr Zug fährt von einem anderen Gleis ab."
+            ],
+            "correctAnswerIndex": 2,
+            "explanation": "Die richtige Antwort ist c. Die Durchsage informiert über eine Gleisänderung: 'Reisende nach Berlin beachten bitte: Ihr Zug, der ICE 801, fährt heute nicht von Gleis 12, sondern gegenüber von Gleis 13.' Es wird keine Verspätung (a) oder ein Ausfall (b) für den Berlin-Zug erwähnt."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Durchsage in einem Kaufhaus.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 9 und 10. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "male",
+        "transcript": "Werte Kundinnen und Kunden, wir haben ein besonderes Angebot für Sie. Nur heute erhalten Sie in unserer Sportabteilung im dritten Stock auf alle Laufschuhe einen Rabatt von 30 Prozent. Besuchen Sie uns und finden Sie das passende Modell. Außerdem möchten wir Sie darauf hinweisen, dass unser Kaufhaus heute wegen einer Betriebsversammlung bereits um 19 Uhr schließt und nicht wie gewohnt um 20 Uhr. Wir danken für Ihr Verständnis und wünschen Ihnen noch einen angenehmen Einkauf.",
+        "questions": [
+          {
+            "id": "lp1-i1-b5-q9",
+            "type": "true-false",
+            "statement": "Das Kaufhaus hat heute länger geöffnet als normal.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Das Kaufhaus schließt früher. Der Sprecher sagt: '...dass unser Kaufhaus heute wegen einer Betriebsversammlung bereits um 19 Uhr schließt und nicht wie gewohnt um 20 Uhr.'"
+          },
+          {
+            "id": "lp1-i1-b5-q10",
+            "type": "multiple-choice",
+            "question": "Was ist heute im Angebot?",
+            "options": [
+              "Alle Artikel im dritten Stock.",
+              "Sportbekleidung.",
+              "Laufschuhe."
+            ],
+            "correctAnswerIndex": 2,
+            "explanation": "Die richtige Antwort ist c. Das Angebot bezieht sich spezifisch auf Laufschuhe: '...erhalten Sie in unserer Sportabteilung im dritten Stock auf alle Laufschuhe einen Rabatt von 30 Prozent.' Es gilt nicht für alle Artikel im dritten Stock (a) und auch nicht für die gesamte Sportbekleidung (b), sondern nur für die Schuhe."
+          }
+        ]
+      }
+    ]
+  }, 
+  "lp1-i2": {
+    "id": "lp1-i2",
+    "type": "listening-part-1",
+    "audioSrc": "http://127.0.0.1:5000/static/audios/teil1/listening-part-1-instance2.mp3",
+    "instruction": "Sie hören nun fünf kurze Texte. Sie hören jeden Text zweimal. Zu jedem Text lösen Sie zwei Aufgaben. Wählen Sie bei jeder Aufgabe die richtige Lösung.",
+    "example": {
+      "context": "Sie hören eine Nachricht auf dem Anrufbeantworter.",
+      "preReadInstruction": "Lesen Sie zuerst das Beispiel. Dazu haben Sie 10 Sekunden Zeit.",
+      "speakerGender": "female",
+      "transcript": "Hallo Jan, hier ist Maja. Ich rufe wegen unserer Verabredung am Samstag an. Ich habe gerade gesehen, dass das Wetter richtig schlecht werden soll. Sollen wir statt in den Park lieber ins Kino gehen? Der neue Film mit Daniel Brühl läuft. Ruf mich doch bitte zurück, damit wir das klären können. Bis dann!",
+      "questions": [
+        {
+          "id": "lp1-i2-e1-q1",
+          "type": "true-false",
+          "statement": "Maja möchte die Verabredung mit Jan absagen.",
+          "correctAnswer": false,
+          "explanation": ""
+        },
+        {
+          "id": "lp1-i2-e1-q2",
+          "type": "multiple-choice",
+          "question": "Maja schlägt vor, ...",
+          "options": [
+            "am Samstag zu Hause zu bleiben.",
+            "ins Kino zu gehen.",
+            "einen anderen Tag auszumachen."
+          ],
+          "correctAnswerIndex": 1,
+          "explanation": ""
+        }
+      ]
+    },
+    "textBlocks": [
+      {
+        "context": "Sie hören eine Durchsage im Supermarkt.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 1 und 2. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "female",
+        "transcript": "Liebe Kundinnen und Kunden, bitte beachten Sie unser heutiges Sonderangebot in der Obst- und Gemüseabteilung. Frische Erdbeeren aus der Region, die 500-Gramm-Schale für nur 1 Euro 99. Außerdem möchten wir Sie darauf hinweisen, dass unser Geschäft heute wegen einer internen Schulung bereits um 19 Uhr schließt und nicht wie gewohnt um 20 Uhr. Wir danken für Ihr Verständnis und wünschen Ihnen einen angenehmen Einkauf.",
+        "questions": [
+          {
+            "id": "lp1-i2-b1-q1",
+            "type": "true-false",
+            "statement": "Der Supermarkt hat heute länger geöffnet.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Die Sprecherin sagt: '...unser Geschäft heute wegen einer internen Schulung bereits um 19 Uhr schließt und nicht wie gewohnt um 20 Uhr.' Der Supermarkt schließt also früher."
+          },
+          {
+            "id": "lp1-i2-b1-q2",
+            "type": "multiple-choice",
+            "question": "Was gibt es heute im Sonderangebot?",
+            "options": [
+              "Obst aus dem Ausland.",
+              "Regionale Erdbeeren.",
+              "Alle Gemüsesorten."
+            ],
+            "correctAnswerIndex": 1,
+            "explanation": "Die richtige Antwort ist b. Die Sprecherin sagt: 'Frische Erdbeeren aus der Region, die 500-Gramm-Schale für nur 1 Euro 99.' Option a ist falsch, da die Erdbeeren 'aus der Region' sind. Option c ist falsch, da nur Erdbeeren als spezifisches Angebot genannt werden, nicht alle Gemüsesorten."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Nachricht auf der Mailbox Ihres Fitnessstudios.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 3 und 4. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "male",
+        "transcript": "Guten Tag, hier ist die Anmeldung vom Fitnesscenter 'Fit & Fun'. Diese Nachricht ist für Herrn Klaus Baumann. Herr Baumann, Sie hatten für morgen, Dienstag, um 17 Uhr einen Termin bei unserem Trainer, Herrn Schmidt. Leider ist Herr Schmidt kurzfristig erkrankt. Wir müssen den Termin daher absagen. Sie können gerne online einen neuen Termin buchen oder uns unter der bekannten Nummer zurückrufen. Wir bitten um Entschuldigung für die Umstände.",
+        "questions": [
+          {
+            "id": "lp1-i2-b2-q1",
+            "type": "true-false",
+            "statement": "Das Fitnessstudio ruft an, um einen Termin zu bestätigen.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Der Sprecher sagt: 'Leider ist Herr Schmidt kurzfristig erkrankt. Wir müssen den Termin daher absagen.' Der Anruf dient also der Absage, nicht der Bestätigung."
+          },
+          {
+            "id": "lp1-i2-b2-q2",
+            "type": "multiple-choice",
+            "question": "Was soll Herr Baumann tun?",
+            "options": [
+              "Direkt ins Fitnessstudio kommen.",
+              "Herrn Schmidt persönlich anrufen.",
+              "Einen neuen Termin vereinbaren."
+            ],
+            "correctAnswerIndex": 2,
+            "explanation": "Die richtige Antwort ist c. Der Sprecher schlägt vor: 'Sie können gerne online einen neuen Termin buchen oder uns unter der bekannten Nummer zurückrufen.' Option a ist falsch, da der Termin abgesagt wurde. Option b ist falsch, da Herr Schmidt krank ist und man das Fitnessstudio, nicht ihn persönlich, kontaktieren soll."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Wettervorhersage im Radio.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 5 und 6. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "female",
+        "transcript": "Und hier ist die Wettervorhersage für das kommende Wochenende. Der Freitag startet noch recht freundlich mit einer Mischung aus Sonne und Wolken bei Temperaturen um 15 Grad. Doch in der Nacht zum Samstag zieht eine Kaltfront herein. Der Samstag wird dann sehr regnerisch und stürmisch, die Temperaturen fallen auf unter 10 Grad. Für den Sonntag sehen die Aussichten aber wieder besser aus: Der Regen lässt nach und die Sonne zeigt sich wieder häufiger. Die Temperaturen steigen wieder leicht an.",
+        "questions": [
+          {
+            "id": "lp1-i2-b3-q1",
+            "type": "true-false",
+            "statement": "Am gesamten Wochenende wird das Wetter schlecht sein.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Nur der Samstag wird als 'sehr regnerisch und stürmisch' beschrieben. Der Freitag startet 'recht freundlich' und am Sonntag 'sehen die Aussichten aber wieder besser aus'."
+          },
+          {
+            "id": "lp1-i2-b3-q2",
+            "type": "multiple-choice",
+            "question": "Wann wird es am kältesten?",
+            "options": [
+              "Am Freitag.",
+              "Am Samstag.",
+              "Am Sonntag."
+            ],
+            "correctAnswerIndex": 1,
+            "explanation": "Die richtige Antwort ist b. Die Sprecherin sagt über den Samstag: '...die Temperaturen fallen auf unter 10 Grad.' Für Freitag werden 15 Grad genannt und für Sonntag ein leichter Anstieg, also ist der Samstag der kälteste Tag."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine automatische Telefonauskunft einer Fluggesellschaft.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 7 und 8. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "male",
+        "transcript": "Herzlich willkommen bei AirConnect. Ihr Flug LH 458 nach Lissabon ist planmäßig und wird voraussichtlich pünktlich starten. Der Check-in für diesen Flug befindet sich in Terminal 1, Schalter 112 bis 115. Bitte beachten Sie, dass aufgrund erhöhter Sicherheitskontrollen mit längeren Wartezeiten zu rechnen ist. Wir empfehlen Ihnen daher, mindestens zweieinhalb Stunden vor Abflug am Flughafen zu sein. Für weitere Informationen bleiben Sie bitte in der Leitung.",
+        "questions": [
+          {
+            "id": "lp1-i2-b4-q1",
+            "type": "true-false",
+            "statement": "Der Flug nach Lissabon hat Verspätung.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Der Sprecher sagt: 'Ihr Flug LH 458 nach Lissabon ist planmäßig und wird voraussichtlich pünktlich starten.'"
+          },
+          {
+            "id": "lp1-i2-b4-q2",
+            "type": "multiple-choice",
+            "question": "Passagiere sollten mehr Zeit einplanen, weil...",
+            "options": [
+              "der Check-in-Schalter gewechselt hat.",
+              "es längere Sicherheitskontrollen gibt.",
+              "der Flug überbucht ist."
+            ],
+            "correctAnswerIndex": 1,
+            "explanation": "Die richtige Antwort ist b. Die Ansage lautet: 'Bitte beachten Sie, dass aufgrund erhöhter Sicherheitskontrollen mit längeren Wartezeiten zu rechnen ist.' Die anderen Optionen werden im Text nicht erwähnt."
+          }
+        ]
+      },
+      {
+        "context": "Sie hören eine Nachricht auf Ihrer Mailbox.",
+        "preReadInstruction": "Lesen Sie jetzt die Aufgaben 9 und 10. Dazu haben Sie 10 Sekunden Zeit.",
+        "speakerGender": "female",
+        "transcript": "Hallo, hier ist Lena. Du, ich wollte fragen, ob du morgen Abend schon was vorhast. Meine Freundin, die Künstlerin ist, hat eine Ausstellungseröffnung in der Stadtgalerie. Es gibt Musik und kleine Snacks. Ich dachte, das könnte dir auch gefallen. Die Eröffnung beginnt um 19 Uhr. Ich würde mich riesig freuen, wenn du mitkommst. Sag mir einfach kurz Bescheid, ob du Zeit und Lust hast. Bis dann!",
+        "questions": [
+          {
+            "id": "lp1-i2-b5-q1",
+            "type": "true-false",
+            "statement": "Lena lädt zu ihrer eigenen Ausstellungseröffnung ein.",
+            "correctAnswer": false,
+            "explanation": "Die Aussage ist falsch. Lena sagt: 'Meine Freundin, die Künstlerin ist, hat eine Ausstellungseröffnung...'. Es ist also die Ausstellung ihrer Freundin, nicht ihre eigene."
+          },
+          {
+            "id": "lp1-i2-b5-q2",
+            "type": "multiple-choice",
+            "question": "Worum bittet Lena?",
+            "options": [
+              "Um eine schnelle Antwort.",
+              "Um Hilfe bei der Organisation.",
+              "Um einen Anruf bei ihrer Freundin."
+            ],
+            "correctAnswerIndex": 0,
+            "explanation": "Die richtige Antwort ist a. Lena sagt am Ende der Nachricht: 'Sag mir einfach kurz Bescheid, ob du Zeit und Lust hast.' Sie bittet also um eine Rückmeldung. Die anderen Optionen werden nicht erwähnt."
+          }
+        ]
+      }
+    ]
+  }
+}

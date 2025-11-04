@@ -1,0 +1,146 @@
+{
+  "lp2-i1": {
+    "id": "lp2-i1",
+    "type": "listening-part-2",
+    "audioSrc": "http://127.0.0.1:5000/static/audios/teil2/listening-part-2-instance1.mp3",
+    "instruction": "Sie hören nun einen Text. Sie hören den Text einmal. Dazu lösen Sie fünf Aufgaben. Wählen Sie bei jeder Aufgabe die richtige Lösung a, b oder c.",
+    "context": "Sie sind bei einer Einführungsveranstaltung für neue ehrenamtliche Helfer und hören die Begrüßungsrede der Leiterin.",
+    "preReadInstruction": "Lesen Sie jetzt die Aufgaben 11 bis 15. Dazu haben Sie 60 Sekunden Zeit.",
+    "speakerGender": "female",
+    "transcript": "Guten Morgen und herzlich willkommen bei der „Tafel“! Mein Name ist Sabine Lehmann und ich leite diesen Standort. Ich freue mich riesig, dass Sie alle heute hier sind, um uns ehrenamtlich zu unterstützen. Ihre Hilfe ist wirklich unbezahlbar. Lassen Sie mich Ihnen kurz erklären, was wir tun und wie Ihre Aufgaben aussehen werden. Unsere Organisation gibt es mittlerweile seit über 15 Jahren. Als wir anfingen, waren wir nur eine Handvoll Leute mit einem alten Auto. Heute haben wir drei Fahrzeuge und über 50 Freiwillige, so wie Sie! Ihre Hauptaufgaben lassen sich in zwei Bereiche teilen: Das eine Team, unser Fahrer-Team, fährt morgens die Supermärkte und Bäckereien ab, mit denen wir kooperieren, und sammelt die Lebensmittel ein, die dort nicht mehr verkauft werden. Das andere Team arbeitet hier vor Ort und sortiert diese Lebensmittel. Es muss geprüft werden, was noch gut ist und was leider entsorgt werden muss. Die Verwaltungsaufgaben, also die Organisation im Hintergrund, übernehmen übrigens unsere festangestellten Mitarbeiter. Der Tagesablauf ist klar strukturiert: Die Fahrer starten um 8 Uhr. Gleichzeitig beginnt hier das Sortier-Team. Früher haben wir die Essensausgabe am Vormittag gemacht, aber das war logistisch schwierig. Deshalb findet die Ausgabe selbst jetzt immer von 13 bis 15 Uhr statt. Eine wichtige Regel: Bitte nehmen Sie sich während der Arbeit keine Lebensmittel für den privaten Gebrauch. Das wäre unfair. Wenn am Ende des Tages aber etwas übrig bleibt, was wir nicht lagern können, dürfen sich die Helfer gerne etwas davon mitnehmen. Zum Schluss noch ein Blick in die Zukunft: Wir haben schon einen kleinen Lieferservice für Menschen, die nicht zu uns kommen können. Die Idee einer Kleidersammlung haben wir wieder verworfen, das ist zu aufwändig. Unser nächstes großes Projekt ist aber, hier einen kleinen Raum als Café einzurichten, wo sich die Menschen bei einer Tasse Kaffee und einem Stück Kuchen aufwärmen und unterhalten können. So, das war das Wichtigste für den Anfang. Ich stelle Ihnen jetzt die Teamleiter vor…",
+    "questions": [
+      {
+        "id": "lp2-i1-q11",
+        "type": "multiple-choice",
+        "question": "Die Organisation 'Die Tafel'...",
+        "options": [
+          "wurde erst vor Kurzem gegründet.",
+          "hatte zu Beginn nur wenige Mitarbeiter.",
+          "kooperiert ausschließlich mit Supermärkten."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist korrekt. Die Leiterin sagt: 'Als wir anfingen, waren wir nur eine Handvoll Leute mit einem alten Auto.' Das bedeutet, sie hatten nur wenige Mitarbeiter. Antwort a ist falsch, denn die Organisation gibt es 'seit über 15 Jahren'. Antwort c ist falsch, da sie sagt, dass sie 'Supermärkte und Bäckereien' abfahren."
+      },
+      {
+        "id": "lp2-i1-q12",
+        "type": "multiple-choice",
+        "question": "Was gehört zu den Aufgaben der neuen Helfer?",
+        "options": [
+          "Lebensmittel abholen und sortieren.",
+          "Die Büroorganisation erledigen.",
+          "Den Lieferservice für Kranke übernehmen."
+        ],
+        "correctAnswerIndex": 0,
+        "explanation": "Antwort a ist korrekt. Die Leiterin beschreibt die zwei Hauptaufgaben: 'Das eine Team ... sammelt die Lebensmittel ein... Das andere Team arbeitet hier vor Ort und sortiert diese Lebensmittel.' Antwort b ist falsch, denn sie sagt: 'Die Verwaltungsaufgaben ... übernehmen übrigens unsere festangestellten Mitarbeiter.' Antwort c ist falsch; der Lieferservice wird zwar erwähnt, aber nicht als Aufgabe für die neuen Helfer vorgestellt."
+      },
+      {
+        "id": "lp2-i1-q13",
+        "type": "multiple-choice",
+        "question": "Wann können die Bedürftigen ihr Essen abholen?",
+        "options": [
+          "Schon am Vormittag.",
+          "Ab 13 Uhr.",
+          "Den ganzen Tag über."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist korrekt. Die Leiterin sagt deutlich: '...deshalb findet die Ausgabe selbst jetzt immer von 13 bis 15 Uhr statt.' Antwort a ist falsch, weil sie erklärt: 'Früher haben wir die Essensausgabe am Vormittag gemacht, aber das war logistisch schwierig.' Das ist also die alte, nicht die aktuelle Zeit. Antwort c ist falsch, da die Ausgabe auf den Zeitraum von 13 bis 15 Uhr begrenzt ist."
+      },
+      {
+        "id": "lp2-i1-q14",
+        "type": "multiple-choice",
+        "question": "Unter welcher Bedingung dürfen Helfer Lebensmittel mitnehmen?",
+        "options": [
+          "Sie dürfen jederzeit Lebensmittel für sich nehmen.",
+          "Sie dürfen nur Lebensmittel nehmen, die sonst weggeworfen würden.",
+          "Sie dürfen am Tagesende nehmen, was übrig geblieben ist."
+        ],
+        "correctAnswerIndex": 2,
+        "explanation": "Antwort c ist korrekt. Die Regel lautet: 'Wenn am Ende des Tages aber etwas übrig bleibt, was wir nicht lagern können, dürfen sich die Helfer gerne etwas davon mitnehmen.' Antwort a ist falsch, denn sie sagt: 'Bitte nehmen Sie sich während der Arbeit keine Lebensmittel für den privaten Gebrauch.' Antwort b ist zwar logisch, aber die explizite Regel im Text bezieht sich auf den Zeitpunkt ('am Ende des Tages') und den Zustand ('übrig bleibt'), nicht auf die Alternative des Wegwerfens."
+      },
+      {
+        "id": "lp2-i1-q15",
+        "type": "multiple-choice",
+        "question": "Was plant die 'Tafel' als nächstes Projekt?",
+        "options": [
+          "Eine Sammlung für Kleidung.",
+          "Die Eröffnung eines kleinen Cafés.",
+          "Den Aufbau eines Lieferservices."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist korrekt. Die Leiterin kündigt an: 'Unser nächstes großes Projekt ist aber, hier einen kleinen Raum als Café einzurichten...' Antwort a ist ein expliziter Distraktor, denn diese Idee wurde abgelehnt: 'Die Idee einer Kleidersammlung haben wir wieder verworfen...' Antwort c ist ebenfalls ein Distraktor, da der Lieferservice bereits existiert: 'Wir haben schon einen kleinen Lieferservice...'"
+      }
+    ]
+  }, 
+  "lp2-i2": {
+    "id": "lp2-i2",
+    "type": "listening-part-2",
+    "audioSrc": "http://127.0.0.1:5000/static/audios/teil2/listening-part-2-instance2.mp3",
+    "instruction": "Sie hören nun einen Text. Sie hören den Text einmal. Dazu lösen Sie fünf Aufgaben. Wählen Sie bei jeder Aufgabe die richtige Lösung a, b oder c.",
+    "context": "Sie nehmen an einer Führung durch eine Schokoladenmanufaktur teil.",
+    "preReadInstruction": "Lesen Sie jetzt die Aufgaben 11 bis 15. Dazu haben Sie 60 Sekunden Zeit.",
+    "speakerGender": "male",
+    "transcript": "Herzlich willkommen in unserer „SchokoWelt“! Mein Name ist Thomas und ich freue mich sehr, Sie heute durch unsere Manufaktur führen zu dürfen. Bevor wir starten, ein paar Worte zu unserer Geschichte. Viele denken, unsere Tradition reicht bis ins 19. Jahrhundert zurück, wie bei vielen Schweizer Herstellern, aber das ist bei uns nicht der Fall. Unsere Chocolaterie wurde 1955 von meinem Großvater gegründet, also kurz nach dem Krieg. Und wir sind bis heute ein reiner Familienbetrieb, wir wurden nie von einem großen Konzern übernommen, worauf wir sehr stolz sind. So, wir beginnen unseren Rundgang gleich hier in unserem kleinen Museum, wo Sie etwas über die Geschichte unserer Familie und des Kakaos lernen. Danach gehen wir weiter in die gläserne Manufaktur, wo Sie die moderne Produktion live beobachten können. Und ganz am Ende der Tour, nach der Verkostung, haben Sie dann die Möglichkeit, in unserem Shop einzukaufen. Nun zu den Zutaten: Die Kakaobohnen, die Basis unserer Schokolade, beziehen wir direkt von Kooperativen aus verschiedenen Ländern Südamerikas, wie Peru und Ecuador. Wir verwenden bewusst keine Bohnen aus Afrika, da die Sorten aus Südamerika besser zu unserem Geschmacksprofil passen. Eine andere wichtige Zutat, unsere Haselnüsse für das Nougat, kommt allerdings direkt aus dem Piemont in Italien – die gelten als die besten der Welt. Im Anschluss an die Produktionshalle lade ich Sie in unseren Verkostungsraum ein. Dort dürfen Sie drei unserer beliebtesten Sorten probieren: eine klassische Vollmilchschokolade, eine dunkle Schokolade mit 70% Kakaoanteil und unsere berühmte weiße Schokolade mit Pistazien. Workshops, bei denen man seine eigene Schokolade herstellen kann, bieten wir übrigens auch an, aber die müssen separat gebucht werden und sind nicht Teil dieser Führung. Im Shop finden Sie natürlich über 50 weitere Sorten, aber bei der heutigen Verkostung konzentrieren wir uns auf diese drei. Zum Schluss noch ein Hinweis: Als Teilnehmer dieser Führung erhalten Sie heute 10% Rabatt auf unser gesamtes Schokoladensortiment. Ausgenommen von dieser Aktion sind lediglich Bücher und Gutscheine. So, wenn es keine Fragen gibt, folgen Sie mir bitte ins Museum.",
+    "questions": [
+      {
+        "id": "lp2-i2-q11",
+        "type": "multiple-choice",
+        "question": "Was erfährt man über die Geschichte der Firma?",
+        "options": [
+          "Sie ist seit dem 19. Jahrhundert in Familienbesitz.",
+          "Sie wurde nach dem Zweiten Weltkrieg gegründet.",
+          "Sie gehört heute zu einem großen Konzern."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Die richtige Antwort ist b. Der Sprecher sagt: 'Unsere Chocolaterie wurde 1955 von meinem Großvater gegründet, also kurz nach dem Krieg.' Option a ist falsch, weil er explizit sagt, dass die Firma nicht aus dem 19. Jahrhundert stammt ('...das ist bei uns nicht der Fall'). Option c ist falsch, weil er betont: '...wir wurden nie von einem großen Konzern übernommen'."
+      },
+      {
+        "id": "lp2-i2-q12",
+        "type": "multiple-choice",
+        "question": "Woher kommen die Zutaten für die Schokolade?",
+        "options": [
+          "Die Kakaobohnen kommen aus Afrika.",
+          "Die Haselnüsse werden aus Südamerika importiert.",
+          "Der Kakao stammt aus südamerikanischen Ländern."
+        ],
+        "correctAnswerIndex": 2,
+        "explanation": "Die richtige Antwort ist c. Der Sprecher erklärt: 'Die Kakaobohnen... beziehen wir direkt von Kooperativen aus verschiedenen Ländern Südamerikas, wie Peru und Ecuador.' Option a ist falsch, denn er sagt: 'Wir verwenden bewusst keine Bohnen aus Afrika'. Option b ist falsch, da die Haselnüsse aus Italien kommen, nicht aus Südamerika ('...unsere Haselnüsse... kommt allerdings direkt aus dem Piemont in Italien')."
+      },
+      {
+        "id": "lp2-i2-q13",
+        "type": "multiple-choice",
+        "question": "Was sehen die Besucher als Erstes auf dem Rundgang?",
+        "options": [
+          "Eine Ausstellung über die Firmengeschichte.",
+          "Die modernen Maschinen der Produktion.",
+          "Den Verkaufsraum der Manufaktur."
+        ],
+        "correctAnswerIndex": 0,
+        "explanation": "Die richtige Antwort ist a. Der Sprecher sagt: 'Wir beginnen unseren Rundgang gleich hier in unserem kleinen Museum, wo Sie etwas über die Geschichte unserer Familie und des Kakaos lernen.' Option b ist falsch, da die moderne Produktion erst danach kommt ('Danach gehen wir weiter in die gläserne Manufaktur...'). Option c ist falsch, da der Shop am Ende der Tour besucht wird ('Und ganz am Ende der Tour... haben Sie dann die Möglichkeit, in unserem Shop einzukaufen')."
+      },
+      {
+        "id": "lp2-i2-q14",
+        "type": "multiple-choice",
+        "question": "Bei der Verkostung können die Teilnehmer...",
+        "options": [
+          "ihre eigene Schokolade machen.",
+          "drei vorgegebene Sorten probieren.",
+          "aus allen Sorten frei auswählen."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Die richtige Antwort ist b. Der Sprecher kündigt an: 'Dort dürfen Sie drei unserer beliebtesten Sorten probieren...'. Option a ist falsch, da Workshops zum Selbermachen extra gebucht werden müssen ('...sind nicht Teil dieser Führung'). Option c ist falsch, da er sagt, dass es im Shop über 50 Sorten gibt, sie sich bei der Verkostung aber 'auf diese drei' konzentrieren."
+      },
+      {
+        "id": "lp2-i2-q15",
+        "type": "multiple-choice",
+        "question": "Was gilt für das Angebot im Shop?",
+        "options": [
+          "Man bekommt auf alle Produkte 10% Rabatt.",
+          "Der Rabatt gilt nicht für Bücher.",
+          "Man bekommt Schokolade geschenkt."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Die richtige Antwort ist b. Der Sprecher erklärt: '...10% Rabatt auf unser gesamtes Schokoladensortiment. Ausgenommen von dieser Aktion sind lediglich Bücher und Gutscheine.' Option a ist daher falsch, da der Rabatt nicht für 'alle' Produkte gilt. Option c ist falsch, es wird ein Rabatt erwähnt, aber keine geschenkte Schokolade im Rahmen des Angebots."
+      }
+    ]
+  }
+}

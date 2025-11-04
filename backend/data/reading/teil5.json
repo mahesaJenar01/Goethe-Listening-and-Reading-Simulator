@@ -1,0 +1,164 @@
+{
+  "rp5-i1": {
+    "id": "rp5-i1",
+    "type": "reading-part-5",
+    "instruction": "Lesen Sie die Benutzungsordnung und die Aufgaben 27 bis 30. Wählen Sie die richtige Lösung a, b oder c.",
+    "workingTime": "ca. 10 Minuten",
+    "regulations": {
+      "title": "Benutzungsordnung für das städtische Fitness-Studio „Aktiv-Park“",
+      "paragraphs": [
+        {
+          "heading": "§ 1 Allgemeines",
+          "text": "Diese Benutzungsordnung gilt für alle Mitglieder und Gäste des Fitness-Studios „Aktiv-Park“. Mit dem Betreten des Studios wird diese Ordnung anerkannt. Den Anweisungen des Personals ist stets Folge zu leisten. Das Studio dient der sportlichen Betätigung und der Gesundheitsförderung."
+        },
+        {
+          "heading": "§ 2 Mitgliedschaft und Zutritt",
+          "text": "Der Zutritt zum Studio ist nur mit einer gültigen, personengebundenen Mitgliedskarte gestattet. Die Karte ist beim Betreten des Studios unaufgefordert am Empfang vorzuzeigen. Der Verlust der Mitgliedskarte ist dem Personal unverzüglich zu melden. Gegen eine Bearbeitungsgebühr von 10 Euro wird eine Ersatzkarte ausgestellt."
+        },
+        {
+          "heading": "§ 3 Nutzung der Trainingsgeräte",
+          "text": "Alle Trainingsgeräte sind pfleglich zu behandeln. Nach der Benutzung sind die Geräte mit den bereitgestellten Desinfektionsmitteln zu reinigen. Aus hygienischen Gründen ist bei der Benutzung der Geräte stets ein Handtuch unterzulegen. Bei starker Auslastung ist die Nutzungsdauer für Cardiogeräte (Laufband, Fahrrad etc.) auf 30 Minuten pro Person beschränkt, um allen Mitgliedern eine Trainingsmöglichkeit zu geben."
+        },
+        {
+          "heading": "§ 4 Umkleideräume und Spinde",
+          "text": "Die Spinde in den Umkleideräumen dienen der Aufbewahrung von Kleidung und persönlichen Gegenständen ausschließlich während der Trainingszeit. Das Studio übernimmt keine Haftung für Wertsachen. Die Spinde müssen nach Verlassen des Studios vollständig geräumt werden. Über Nacht verschlossene Spinde werden vom Personal geöffnet und der Inhalt wird für eine Woche aufbewahrt."
+        },
+        {
+          "heading": "§ 5 Kursanmeldung",
+          "text": "Die Teilnahme an den Fitnesskursen ist im Mitgliedsbeitrag enthalten. Eine Anmeldung ist für alle Kurse erforderlich und kann frühestens 24 Stunden vor Kursbeginn online über unsere Webseite erfolgen. Eine telefonische Anmeldung ist nicht möglich. Sollten Sie an einem gebuchten Kurs nicht teilnehmen können, bitten wir um eine rechtzeitige Stornierung, um den Platz für andere Mitglieder freizugeben."
+        }
+      ]
+    },
+    "questions": [
+      {
+        "id": "rp5-i1-q27",
+        "type": "multiple-choice",
+        "question": "Was muss ein Mitglied tun, wenn es seine Mitgliedskarte verloren hat?",
+        "options": [
+          "Das Studio telefonisch informieren.",
+          "Den Verlust persönlich melden und für eine neue Karte bezahlen.",
+          "Eine Woche warten, ob die Karte gefunden wird."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort 'b' ist richtig. In § 2 steht: 'Der Verlust der Mitgliedskarte ist dem Personal unverzüglich zu melden. Gegen eine Bearbeitungsgebühr von 10 Euro wird eine Ersatzkarte ausgestellt.' Das bedeutet, man muss es persönlich melden und bezahlen. Antwort 'a' ist falsch, weil man es dem Personal melden soll, nicht explizit telefonisch. Antwort 'c' ist falsch, da der Verlust 'unverzüglich' gemeldet werden muss."
+      },
+      {
+        "id": "rp5-i1-q28",
+        "type": "multiple-choice",
+        "question": "Welche Regel gilt für die Benutzung von Laufbändern?",
+        "options": [
+          "Man muss immer ein Handtuch benutzen.",
+          "Man darf sie maximal 20 Minuten benutzen.",
+          "Man muss sie vor dem Training reservieren."
+        ],
+        "correctAnswerIndex": 0,
+        "explanation": "Antwort 'a' ist richtig. In § 3 steht die allgemeine Regel: '...ist bei der Benutzung der Geräte stets ein Handtuch unterzulegen.' Antwort 'b' ist falsch, die Zeitbegrenzung liegt bei 30 Minuten, nicht 20 ('auf 30 Minuten pro Person beschränkt'). Antwort 'c' ist falsch, eine Reservierungspflicht für Geräte wird im Text nicht erwähnt, nur für Kurse."
+      },
+      {
+        "id": "rp5-i1-q29",
+        "type": "multiple-choice",
+        "question": "Was passiert mit einem Spind, der abends noch verschlossen ist?",
+        "options": [
+          "Er wird vom Personal geöffnet.",
+          "Er bleibt verschlossen bis zum nächsten Tag.",
+          "Der Inhalt wird sofort entsorgt."
+        ],
+        "correctAnswerIndex": 0,
+        "explanation": "Antwort 'a' ist richtig. In § 4 steht: 'Über Nacht verschlossene Spinde werden vom Personal geöffnet...'. Antwort 'b' ist somit falsch. Antwort 'c' ist auch falsch, denn der Inhalt wird nicht sofort entsorgt, sondern 'für eine Woche aufbewahrt'."
+      },
+      {
+        "id": "rp5-i1-q30",
+        "type": "multiple-choice",
+        "question": "Wie kann man sich für einen Fitnesskurs anmelden?",
+        "options": [
+          "Man kann sich jederzeit telefonisch anmelden.",
+          "Man muss sich am Empfang in eine Liste eintragen.",
+          "Man kann sich maximal einen Tag vorher online registrieren."
+        ],
+        "correctAnswerIndex": 2,
+        "explanation": "Antwort 'c' ist richtig. In § 5 steht, die Anmeldung 'kann frühestens 24 Stunden vor Kursbeginn online über unsere Webseite erfolgen'. Das entspricht der Aussage 'maximal einen Tag vorher online'. Antwort 'a' ist explizit falsch: 'Eine telefonische Anmeldung ist nicht möglich.' Antwort 'b' ist falsch, da die Anmeldung 'online' erfolgen muss, nicht am Empfang."
+      }
+    ]
+  }, 
+  "rp5-i2": {
+    "id": "rp5-i2",
+    "type": "reading-part-5",
+    "instruction": "Lesen Sie die Benutzungsordnung und die Aufgaben 27 bis 30. Wählen Sie bei jeder Aufgabe die richtige Lösung a, b oder c.",
+    "workingTime": "ca. 10 Minuten",
+    "regulations": {
+      "title": "Benutzungsordnung für das städtische Fitness-Studio 'Fit & Aktiv'",
+      "paragraphs": [
+        {
+          "heading": "§ 1 Allgemeines",
+          "text": "Diese Benutzungsordnung ist für alle Mitglieder und Gäste des Fitness-Studios 'Fit & Aktiv' verbindlich. Mit dem Betreten des Studios wird sie anerkannt. Den Anweisungen des Personals ist stets Folge zu leisten."
+        },
+        {
+          "heading": "§ 2 Mitgliedschaft und Zutritt",
+          "text": "Der Zutritt zum Trainingsbereich ist nur mit einer gültigen Mitgliedskarte gestattet. Die Karte ist nicht auf andere Personen übertragbar. Bei Verlust der Mitgliedskarte ist umgehend das Personal zu informieren. Für die Ausstellung einer Ersatzkarte wird eine Bearbeitungsgebühr von 10 Euro erhoben. Das Mitbringen von Gästen ist nach vorheriger Anmeldung und Zahlung einer Tagesgebühr möglich."
+        },
+        {
+          "heading": "§ 3 Verhalten im Studio",
+          "text": "Alle Mitglieder sind verpflichtet, die Geräte sauber und ordentlich zu hinterlassen. Aus hygienischen Gründen ist bei der Benutzung der Geräte stets ein Handtuch unterzulegen. Hanteln und Gewichte sind nach Gebrauch an ihren ursprünglichen Platz zurückzulegen. Laute Geräusche und laute Musik über Kopfhörer sind zu vermeiden. Das Telefonieren ist ausschließlich im Eingangsbereich gestattet. In den Trainings- und Umkleidebereichen ist es untersagt."
+        },
+        {
+          "heading": "§ 4 Kursanmeldung",
+          "text": "Für die Teilnahme an Fitnesskursen ist eine vorherige Anmeldung erforderlich. Anmeldungen sind frühestens 7 Tage vor Kursbeginn über unsere App oder direkt am Empfang möglich. Sollte eine Teilnahme nicht möglich sein, muss die Abmeldung mindestens 24 Stunden vor Kursbeginn erfolgen, damit der Platz für andere Mitglieder freigegeben werden kann."
+        },
+        {
+          "heading": "§ 5 Haftung und Wertsachen",
+          "text": "Das Studio übernimmt keine Haftung für den Verlust von Wertsachen, Geld oder Kleidung. Für die sichere Aufbewahrung stehen abschließbare Spinde zur Verfügung. Es wird empfohlen, keine Wertsachen mit ins Studio zu bringen. Das Studio haftet nicht für den Inhalt der Spinde."
+        }
+      ]
+    },
+    "questions": [
+      {
+        "id": "rp5-i2-q27",
+        "type": "multiple-choice",
+        "question": "Was muss ein Mitglied tun, wenn es seine Mitgliedskarte verloren hat?",
+        "options": [
+          "Eine Tagesgebühr wie ein Gast bezahlen.",
+          "Gegen eine Gebühr eine neue Karte beantragen.",
+          "Seinen Ausweis am Empfang vorzeigen."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist richtig. In § 2 steht: 'Bei Verlust der Mitgliedskarte ... Für die Ausstellung einer Ersatzkarte wird eine Bearbeitungsgebühr von 10 Euro erhoben.' a ist falsch, die Tagesgebühr ist für Gäste. c wird im Text nicht erwähnt."
+      },
+      {
+        "id": "rp5-i2-q28",
+        "type": "multiple-choice",
+        "question": "Wo ist das Telefonieren im Fitness-Studio erlaubt?",
+        "options": [
+          "In den Umkleidekabinen.",
+          "Nur im Eingangsbereich.",
+          "Überall, solange es nicht stört."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist richtig. In § 3 steht eindeutig: 'Das Telefonieren ist ausschließlich im Eingangsbereich gestattet. In den Trainings- und Umkleidebereichen ist es untersagt.' a und c sind daher falsch."
+      },
+      {
+        "id": "rp5-i2-q29",
+        "type": "multiple-choice",
+        "question": "Ein Mitglied möchte an einem Kurs teilnehmen. Wann kann es sich frühestens dafür anmelden?",
+        "options": [
+          "24 Stunden vor dem Kurs.",
+          "Eine Woche vor dem Kurs.",
+          "Jederzeit nach Veröffentlichung des Kursplans."
+        ],
+        "correctAnswerIndex": 1,
+        "explanation": "Antwort b ist richtig. In § 4 steht: 'Anmeldungen sind frühestens 7 Tage [also eine Woche] vor Kursbeginn ... möglich.' a ist falsch, 24 Stunden ist die Frist für die Abmeldung. c ist falsch, da es eine klare Frist von 7 Tagen gibt."
+      },
+      {
+        "id": "rp5-i2-q30",
+        "type": "multiple-choice",
+        "question": "Was steht in der Hausordnung über Wertsachen?",
+        "options": [
+          "Das Studio ist für den Inhalt der Spinde versichert.",
+          "Man sollte seine Wertsachen beim Personal abgeben.",
+          "Das Studio übernimmt keine Verantwortung für verlorene Gegenstände."
+        ],
+        "correctAnswerIndex": 2,
+        "explanation": "Antwort c ist richtig. In § 5 steht: 'Das Studio übernimmt keine Haftung für den Verlust von Wertsachen...' und 'Das Studio haftet nicht für den Inhalt der Spinde.' a ist somit direkt falsch. b wird im Text nicht als Möglichkeit angeboten."
+      }
+    ]
+  }
+}

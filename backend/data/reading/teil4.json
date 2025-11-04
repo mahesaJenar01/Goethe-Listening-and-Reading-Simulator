@@ -1,0 +1,150 @@
+{
+  "rp4-i1": {
+    "id": "rp4-i1",
+    "type": "reading-part-4",
+    "instruction": "Lesen Sie die Kommentare 20 bis 26. Sind die Personen für (Ja) oder gegen (Nein) den Vorschlag?",
+    "workingTime": "ca. 15 Minuten",
+    "topic": "Generelles Fahrverbot für Privatautos in Innenstädten",
+    "introduction": "In einer Online-Zeitung wird über den Vorschlag diskutiert, in den Innenstädten ein generelles Fahrverbot für private Autos einzuführen. Der öffentliche Nahverkehr soll dafür stark ausgebaut werden. Sie lesen sieben Kommentare zu diesem Thema.",
+    "example": {
+      "id": "rp4-i1-e0",
+      "number": 0,
+      "name": "Klaus, 55",
+      "text": "Ich habe ein kleines Geschäft in der Fußgängerzone. Viele meiner Kunden kommen von außerhalb und nehmen das Auto. Wenn die nicht mehr kommen können, kann ich meinen Laden schließen. Das wäre eine Katastrophe für uns kleine Händler.",
+      "correctAnswer": false,
+      "explanation": "Nein. Klaus ist gegen das Verbot, weil er befürchtet, dass er sonst sein Geschäft schließen muss ('kann ich meinen Laden schließen')."
+    },
+    "opinions": [
+      {
+        "id": "rp4-i1-o20",
+        "number": 20,
+        "name": "Susanne, 34",
+        "text": "Endlich! Die Lebensqualität in den Städten würde so sehr steigen. Bessere Luft, weniger Lärm und mehr Platz für Cafés, Spielplätze und Grünflächen. Ich bin absolut dafür, auch wenn ich dann mein Auto verkaufen müsste.",
+        "correctAnswer": true,
+        "explanation": "Ja. Susanne ist klar für den Vorschlag. Sie zählt nur positive Aspekte auf ('Bessere Luft, weniger Lärm') und schließt mit der Aussage: 'Ich bin absolut dafür'."
+      },
+      {
+        "id": "rp4-i1-o21",
+        "number": 21,
+        "name": "Bernd, 48",
+        "text": "Ich bin Handwerker und muss ständig mit Werkzeug und Material zu Kunden in der Innenstadt. Wie soll das funktionieren? Soll ich alles mit dem Bus transportieren? Das ist doch völlig unrealistisch und nicht durchdacht.",
+        "correctAnswer": false,
+        "explanation": "Nein. Bernd ist gegen den Vorschlag. Er beschreibt, dass er beruflich auf sein Auto angewiesen ist und hält die Idee für 'völlig unrealistisch'."
+      },
+      {
+        "id": "rp4-i1-o22",
+        "number": 22,
+        "name": "Leonie, 21",
+        "text": "Unsere Städte ersticken im Verkehr. Für das Klima und für uns Menschen wäre das ein riesiger Schritt nach vorn. Wir müssen endlich umdenken und dem öffentlichen Verkehr und dem Fahrrad den Vorrang geben. Eine mutige und richtige Entscheidung!",
+        "correctAnswer": true,
+        "explanation": "Ja. Leonie befürwortet den Vorschlag stark. Sie nennt es einen 'riesiger Schritt nach vorn' und eine 'richtige Entscheidung'."
+      },
+      {
+        "id": "rp4-i1-o23",
+        "number": 23,
+        "name": "Horst, 76",
+        "text": "Ich wohne auf dem Land und muss zweimal pro Woche zum Facharzt in die Stadt. Mit Bus und Bahn brauche ich für eine Strecke fast zwei Stunden, mit dem Auto 30 Minuten. In meinem Alter sind solche Reisen sehr anstrengend. Ich weiß nicht, wie ich das schaffen soll.",
+        "correctAnswer": false,
+        "explanation": "Nein. Horst ist gegen das Verbot. Er beschreibt, dass er auf das Auto für seine Arztbesuche angewiesen ist und die Alternative für ihn unzumutbar wäre ('Ich weiß nicht, wie ich das schaffen soll')."
+      },
+      {
+        "id": "rp4-i1-o24",
+        "number": 24,
+        "name": "David, 29",
+        "text": "Viele Leute sagen, das schränkt die Freiheit ein. Ich finde, es schafft neue Freiheiten! Die Freiheit, ohne Angst Rad zu fahren. Die Freiheit für Kinder, draußen zu spielen. Wenn der Nahverkehr dann wirklich gut und günstig ist, sehe ich darin nur Vorteile.",
+        "correctAnswer": true,
+        "explanation": "Ja. David ist für den Vorschlag. Er widerspricht der Kritik und sieht in dem Verbot die Schaffung 'neuer Freiheiten' und 'nur Vorteile'."
+      },
+      {
+        "id": "rp4-i1-o25",
+        "number": 25,
+        "name": "Carola, 41",
+        "text": "Der Gedanke ist ja gut, aber die Umsetzung? Zuerst muss es einen perfekten öffentlichen Nahverkehr geben, der auch die Dörfer anbindet. Und zwar rund um die Uhr. Solange das nicht der Fall ist, ist ein Verbot unsozial und schließt viele Menschen aus.",
+        "correctAnswer": false,
+        "explanation": "Nein. Carola ist gegen den Vorschlag unter den jetzigen Umständen. Sie sagt, solange der Nahverkehr nicht perfekt ausgebaut ist, ist ein Verbot 'unsozial'. Ihre Zustimmung ist an eine Bedingung geknüpft, die aktuell nicht erfüllt ist, daher lehnt sie den Vorschlag ab."
+      },
+      {
+        "id": "rp4-i1-o26",
+        "number": 26,
+        "name": "Tom, 38",
+        "text": "Ich bin Lieferant und fahre für verschiedene Restaurants Essen aus. Private Autos vielleicht, aber was ist mit dem ganzen Wirtschaftsverkehr? Das muss klar geregelt sein. Wenn ich nicht mehr in die Innenstadt fahren darf, bin ich meinen Job los.",
+        "correctAnswer": false,
+        "explanation": "Nein. Tom ist gegen das Verbot aus beruflicher Sorge. Auch wenn er nur von 'privaten Autos' spricht, zeigt seine letzte Aussage 'Wenn ich nicht mehr in die Innenstadt fahren darf, bin ich meinen Job los', dass er den Vorschlag ablehnt, weil er negative Konsequenzen für sich befürchtet."
+      }
+    ]
+  }, 
+  "rp4-i2": {
+    "id": "rp4-i2",
+    "type": "reading-part-4",
+    "instruction": "Lesen Sie die Kommentare 20 bis 26. In einer Online-Zeitung wird über den Vorschlag diskutiert, in Innenstädten ein generelles Fahrverbot für private Autos einzuführen. Sind die Personen dafür (Ja) oder dagegen (Nein)?",
+    "workingTime": "ca. 15 Minuten",
+    "topic": "Autofreie Innenstädte?",
+    "introduction": "Immer mehr Städte diskutieren darüber, private Autos komplett aus den Stadtzentren zu verbannen. Ziel ist es, Lärm und Abgase zu reduzieren und mehr Platz für Fußgänger und Radfahrer zu schaffen. Doch was halten die Bürger davon? Wir haben einige Meinungen gesammelt.",
+    "example": {
+      "id": "rp4-i2-e0",
+      "number": 0,
+      "name": "Peter, 55",
+      "text": "Ich verstehe ja, dass der Verkehr ein Problem ist. Aber ein generelles Verbot halte ich für übertrieben. Was ist mit älteren Menschen oder Familien mit kleinen Kindern, die nicht gut zu Fuß sind? Ich finde, man sollte über bessere Alternativen wie Parkhäuser am Stadtrand nachdenken.",
+      "correctAnswer": false,
+      "explanation": "Nein. Peter ist gegen ein 'generelles Verbot', da er es für 'übertrieben' hält und auf Probleme für bestimmte Personengruppen hinweist."
+    },
+    "opinions": [
+      {
+        "id": "rp4-i2-o20",
+        "number": 20,
+        "name": "Hanna, 28",
+        "text": "Endlich! Unsere Städte gehören den Menschen, nicht den Autos. Ich stelle mir das wunderbar vor: Cafés auf den Straßen, spielende Kinder, saubere Luft. Das würde die Lebensqualität enorm steigern. Ich bin absolut dafür!",
+        "correctAnswer": true,
+        "explanation": "Ja. Hanna ist begeistert von der Idee ('Endlich!', 'wunderbar') und schließt mit der klaren Aussage: 'Ich bin absolut dafür!'"
+      },
+      {
+        "id": "rp4-i2-o21",
+        "number": 21,
+        "name": "Klaus, 47",
+        "text": "Eine Katastrophe für den Einzelhandel! Wenn die Kunden nicht mehr mit dem Auto in die Stadt fahren können, um ihre Einkäufe zu erledigen, weichen sie auf die großen Einkaufszentren am Stadtrand aus. Das wird die Innenstädte zerstören, nicht retten.",
+        "correctAnswer": false,
+        "explanation": "Nein. Klaus sieht nur negative Folgen für die Geschäfte in der Innenstadt und nennt den Vorschlag eine 'Katastrophe für den Einzelhandel'."
+      },
+      {
+        "id": "rp4-i2-o22",
+        "number": 22,
+        "name": "Maria, 39",
+        "text": "Grundsätzlich eine super Idee. Aber bevor man das umsetzt, muss der öffentliche Nahverkehr massiv ausgebaut werden: höhere Taktung, günstigere Preise. Wenn das sichergestellt ist, dann sage ich klar: Ja! Ohne das wird es aber nicht funktionieren.",
+        "correctAnswer": true,
+        "explanation": "Ja. Obwohl Maria eine Bedingung nennt (Ausbau des Nahverkehrs), ist sie für den Vorschlag. Sie nennt ihn eine 'super Idee' und sagt am Ende 'klar: Ja!'"
+      },
+      {
+        "id": "rp4-i2-o23",
+        "number": 23,
+        "name": "Thomas, 62",
+        "text": "Was ist mit der Freiheit, dorthin zu fahren, wo man hinmuss? Für uns, die auf dem Land wohnen, ist das Auto unverzichtbar, um in die Stadt zu kommen. Sollen wir für jeden Arztbesuch drei Stunden mit dem Bus fahren? Das ist eine Politik gegen die Leute von außerhalb.",
+        "correctAnswer": false,
+        "explanation": "Nein. Thomas ist dagegen, weil es die Freiheit einschränkt und für Menschen, die nicht in der Stadt wohnen, unpraktisch ist. Er nennt es eine 'Politik gegen die Leute von außerhalb'."
+      },
+      {
+        "id": "rp4-i2-o24",
+        "number": 24,
+        "name": "Sofia, 21",
+        "text": "Höchste Zeit! Wir müssen endlich an das Klima denken und mutige Entscheidungen treffen. Autos in der Stadt sind ein Konzept von gestern. Für eine lebenswerte Zukunft ist dieser Schritt absolut notwendig.",
+        "correctAnswer": true,
+        "explanation": "Ja. Sofia befürwortet den Vorschlag aus Klimaschutzgründen und hält den Schritt für 'absolut notwendig'."
+      },
+      {
+        "id": "rp4-i2-o25",
+        "number": 25,
+        "name": "Wolfgang, 51",
+        "text": "Total unrealistisch. Wie soll ich als Handwerker zu meinen Kunden in der Innenstadt kommen? Soll ich meine Werkzeugkiste und mein Material mit dem Fahrrad transportieren? An die arbeitende Bevölkerung denkt wieder mal niemand.",
+        "correctAnswer": false,
+        "explanation": "Nein. Wolfgang ist aus praktischen, beruflichen Gründen gegen den Vorschlag. Er fragt, wie er als Handwerker arbeiten soll und nennt die Idee 'Total unrealistisch'."
+      },
+      {
+        "id": "rp4-i2-o26",
+        "number": 26,
+        "name": "Lena, 45",
+        "text": "Natürlich wird es am Anfang schwierig für einige. Aber die Vorteile – weniger Lärm, saubere Luft, mehr Sicherheit für Kinder – überwiegen bei Weitem. Wir müssen uns einfach umgewöhnen und neue Wege finden. Daher ein klares Ja von mir.",
+        "correctAnswer": true,
+        "explanation": "Ja. Lena sieht zwar die anfänglichen Schwierigkeiten, aber die Vorteile sind für sie wichtiger ('überwiegen bei Weitem'). Sie schließt mit 'ein klares Ja von mir'."
+      }
+    ]
+  }
+}

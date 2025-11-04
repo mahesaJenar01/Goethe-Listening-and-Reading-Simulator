@@ -1,0 +1,5 @@
+{
+  "name": "Goethe Listening Exam Simulator",
+  "description": "A web application to practice German Goethe-Institut listening and reading exams. Users can answer pre-defined questions.",
+  "requestFramePermissions": []
+}
