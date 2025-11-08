@@ -2,62 +2,59 @@
 
 This project is a web application designed to help users practice for the Goethe-Zertifikat B1 German language exam. It provides a platform for taking simulated "Hören" (Listening) and "Lesen" (Reading) modules, tracks user performance, and ensures users receive new exam questions on subsequent attempts.
 
+The application features a React/TypeScript frontend and a Flask/Python backend.
+
 ## Features
 
-*   **User Authentication**: A simple registration and login system to manage user sessions.
-*   **Exam Selection**: Users can choose between practicing the "Hören" or "Lesen" modules.
-*   **Dynamic Exam Generation**: The backend serves unique exam instances, preventing users from repeating the same exam parts until all available content has been completed.
-*   **Interactive Exam Interface**: A clean, component-based interface for answering various question types (Multiple Choice, True/False, Matching, etc.).
-*   **Session Persistence**: In-progress exams are saved to local storage, allowing users to refresh the page and continue without losing their answers.
-*   **Detailed Results**: After submission, users receive their score and a detailed review of their answers, including explanations for the correct solutions.
-*   **Performance Tracking**: All completed exam results are saved on the backend, linked to the user's ID.
+*   **Secure Authentication**: A user registration and login system to manage sessions and track individual progress.
+*   **Dynamic Exam Generation**: The backend serves unique exam instances from a pool of questions, preventing users from repeating content until all available exams have been completed.
+*   **Interactive Exam Interface**: A clean, component-based UI for answering various question types, including Multiple Choice, True/False, and Speaker Assignment.
+*   **Session Persistence**: In-progress exams are saved to local storage, allowing users to refresh the page or close the tab and seamlessly continue their session.
+*   **Automated Timer**: Each exam module is timed according to official Goethe-Zertifikat standards, and the session automatically submits when time expires.
+*   **Detailed Results View**: Upon submission, users receive their score and a comprehensive review of their answers, including explanations for the correct solutions.
+*   **Performance Tracking**: All completed exam results, including score and time taken, are saved on the backend and associated with the user's account.
 
 ## Tech Stack
 
-### Frontend
+#### Frontend
+*   **React 18**
+*   **TypeScript**
+*   **React Router**: For client-side routing and navigation.
+*   **Tailwind CSS**: For utility-first styling.
 
-*   React
-*   TypeScript
-*   React Router for navigation
-*   Tailwind CSS for styling
-
-### Backend
-
-*   Flask (Python)
-*   CORS handling for API requests
+#### Backend
+*   **Flask**: A lightweight Python web framework for the API.
+*   **Flask-CORS**: To handle Cross-Origin Resource Sharing between the frontend and backend.
 
 ## Project Structure
-
-The project is organized into a `frontend` and a `backend` directory.
 
 ```
 /
 ├── backend/
-│   ├── app.py                  # Main Flask application
-│   ├── data/                   # JSON files with exam content
-│   ├── userdata/               # Stores user credentials and performance data
+│   ├── app.py                  # Main Flask application and API endpoints
+│   ├── data/                   # JSON files containing exam content
+│   │   ├── listening/
+│   │   └── reading/
+│   ├── userdata/               # Stores user credentials and performance JSON files
 │   └── static/                 # Holds audio files for the listening module
 │
-├── frontend/
-│   ├── public/
-│   └── src/
-│       ├── components/         # React components
-│       ├── contexts/           # AuthContext for state management
-│       ├── hooks/              # Custom React hooks
-│       ├── App.tsx             # Main application component
-│       └── index.tsx           # Entry point
-│
-├── B1 Goethe Listening Exam Simulator (ts) System Prompt.txt
-├── B1 Goethe Reading Exam Simulator (ts) System Prompt.txt
-└── README.md
+└── frontend/
+    └── src/
+        ├── components/         # Reusable React components (Cards, Views, etc.)
+        ├── contexts/           # React Context for authentication state
+        ├── hooks/              # Custom hooks for session management, API calls, and timers
+        ├── state/              # Centralized state logic (reducer, actions, types)
+        ├── utils/              # Helper functions (score calculation, data formatting)
+        ├── App.tsx             # Main application component with routing
+        └── index.tsx           # Application entry point
 ```
 
 ## Setup and Installation
 
 ### Prerequisites
 
-*   Python 3.x
-*   Node.js and npm
+*   Python 3.8+
+*   Node.js v16+ and npm
 
 ### Backend Setup
 
@@ -66,15 +63,15 @@ The project is organized into a `frontend` and a `backend` directory.
     cd backend
     ```
 
-2.  Create and activate a virtual environment:
+2.  Create and activate a Python virtual environment:
     ```sh
-    # For Windows
-    python -m venv venv
-    .\venv\Scripts\activate
-
     # For macOS/Linux
     python3 -m venv venv
     source venv/bin/activate
+
+    # For Windows
+    python -m venv venv
+    .\venv\Scripts\activate
     ```
 
 3.  Install the required Python packages:
@@ -90,12 +87,12 @@ The project is organized into a `frontend` and a `backend` directory.
 
 ### Frontend Setup
 
-1.  In a new terminal, navigate to the `frontend` directory:
+1.  In a **new terminal**, navigate to the `frontend` directory:
     ```sh
     cd frontend
     ```
 
-2.  Install the necessary npm packages:
+2.  Install the required npm packages:
     ```sh
     npm install
     ```
@@ -104,21 +101,25 @@ The project is organized into a `frontend` and a `backend` directory.
     ```sh
     npm start
     ```
-    The application will open automatically in your browser at `http://localhost:3000`.
+    The application will open automatically in your browser at `http://localhost:3000`. The backend server must be running for the application to function correctly.
 
-## Usage
+## API Endpoints
 
-1.  **Register/Login**: When you first visit the application, you will be prompted to register a new account or log in with existing credentials.
-2.  **Select Exam**: After logging in, you can choose to practice either the "Hören" (Listening) or "Lesen" (Reading) module.
-3.  **Take the Exam**: The application will load a new exam that you have not previously completed. Progress through the parts using the navigation buttons. Your answers are saved as you go.
-4.  **Submit and Review**: Once you complete the final part, submit the exam to see your score. You can then review a detailed breakdown of all questions, your answers, and the correct solutions with explanations.
-5.  **Logout**: The header contains a "Logout" button to end your session.
+The backend exposes the following RESTful API endpoints:
+
+| Method | Endpoint             | Description                                          |
+|--------|----------------------|------------------------------------------------------|
+| `POST` | `/api/register`      | Registers a new user.                                |
+| `POST` | `/api/login`         | Authenticates a user and returns their ID.           |
+| `GET`  | `/api/listening-exam`| Fetches a unique, uncompleted listening exam.        |
+| `GET`  | `/api/reading-exam`  | Fetches a unique, uncompleted reading exam.          |
+| `POST` | `/api/save-exam`     | Saves a user's completed exam performance to a file. |
 
 ## Content Generation
 
-The exam content is not hard-coded. The JSON files in the `backend/data` directory are generated using the AI system prompts located in the root folder:
+The exam content is not hard-coded within the application. The JSON files in the `backend/data` directory are generated using the AI system prompts located in the project's root folder:
 
 *   `B1 Goethe Listening Exam Simulator (ts) System Prompt.txt`
 *   `B1 Goethe Reading Exam Simulator (ts) System Prompt.txt`
 
-These prompts instruct a large language model to create new, realistic exam instances in the required JSON format, which can then be added to the application to expand the question bank.
+These prompts instruct a large language model to create new, realistic exam instances in the required JSON format. This allows for the easy expansion of the question bank by simply adding new files to the data directory.
