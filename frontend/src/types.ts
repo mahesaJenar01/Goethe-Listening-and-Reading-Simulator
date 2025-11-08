@@ -208,11 +208,21 @@ export interface StatData {
     totalExams: number;
 }
 
+export interface SkillBreakdownPart {
+  partName: string;
+  score: number;
+}
+
 export interface DashboardStats {
     listening: StatData;
     reading: StatData;
     performanceTrend: PerformanceTrendData[];
+    skillBreakdown: {
+      listening: SkillBreakdownPart[];
+      reading: SkillBreakdownPart[];
+    };
 }
+
 
 
 // Union type for any possible Part (UPDATED)

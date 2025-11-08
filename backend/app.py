@@ -1,9 +1,10 @@
+import re
+import os
 import json
 import random
-from flask import Flask, jsonify, request
 from flask_cors import CORS
-import os
 from datetime import datetime
+from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 CORS(app)
@@ -242,7 +243,6 @@ def save_exam_performance():
     save_user_performance_data(all_users_data)
     return jsonify({"success": True, "message": "Exam performance saved."}), 200
 
-# --- NEW: Dashboard Stats API Route ---
 @app.route('/api/dashboard-stats', methods=['GET'])
 def get_dashboard_stats():
     user_id = request.args.get("userId")
@@ -252,65 +252,68 @@ def get_dashboard_stats():
     all_data = load_user_performance_data()
     user_data = all_data.get(str(user_id), {})
     
-    # --- Calculate Average Scores, Count Completed Exams, and Get Performance Trend ---
     scores = {"listening": {"total_correct": 0, "total_q": 0, "exam_count": 0}, 
               "reading": {"total_correct": 0, "total_q": 0, "exam_count": 0}}
-    
-    # --- NEW: Logic for Performance Trend ---
     performance_trend = []
+    part_performance = {}
 
-    # Sort exams by timestamp (key) to get the most recent ones
     sorted_exams = sorted(user_data.items())
 
     for timestamp, exam in sorted_exams:
         exam_type = exam.get("examType")
         total_score = exam.get("totalScore", 0)
-        total_questions = exam.get("totalQuestions", 1) # Avoid division by zero
+        total_questions = exam.get("totalQuestions", 1)
         
         if exam_type in scores:
             scores[exam_type]["total_correct"] += total_score
             scores[exam_type]["total_q"] += total_questions
             scores[exam_type]["exam_count"] += 1
         
-        # Calculate percentage for the trend chart
         percentage = round((total_score / total_questions) * 100) if total_questions > 0 else 0
-        
-        # Format date for display (e.g., Nov 08)
-        # Using fromisoformat requires Python 3.7+
         date_obj = datetime.fromisoformat(timestamp)
-        formatted_date = date_obj.strftime('%b %d') # e.g., Nov 08
+        formatted_date = date_obj.strftime('%b %d')
+        performance_trend.append({"date": formatted_date, "score": percentage, "examType": exam_type})
 
-        performance_trend.append({
-            "date": formatted_date,
-            "score": percentage,
-            "examType": exam_type
-        })
-    
-    # --- End of New Logic ---
+        exam_parts = exam.get("parts", [])
+        for part_data in exam_parts:
+            part_id = part_data.get("partId", "")
+            if not part_id:
+                continue
+            
+            part_prefix = part_id.split('-')[0]
+            if part_prefix not in part_performance:
+                part_performance[part_prefix] = {"correct": 0, "total": 0}
 
-    avg_listening = 0
-    if scores["listening"]["total_q"] > 0:
-        avg_listening = round((scores["listening"]["total_correct"] / scores["listening"]["total_q"]) * 100)
+            for question in part_data.get("questions", []):
+                part_performance[part_prefix]["total"] += 1
+                if question.get("isCorrect", False):
+                    part_performance[part_prefix]["correct"] += 1
     
-    avg_reading = 0
-    if scores["reading"]["total_q"] > 0:
-        avg_reading = round((scores["reading"]["total_correct"] / scores["reading"]["total_q"]) * 100)
+    skill_breakdown = {"listening": [], "reading": []}
+    for part_prefix, data in sorted(part_performance.items()):
+        exam_type = 'listening' if part_prefix.lower().startswith('l') else 'reading'
+        
+        # --- FIX: Robustly extract ONLY the digits from the prefix ---
+        part_num = re.sub(r'\D', '', part_prefix) # This strips 'l', 'p', etc. leaving only numbers
+        
+        if data["total"] > 0 and part_num:
+            score = round((data["correct"] / data["total"]) * 100)
+            skill_breakdown[exam_type].append({
+                "partName": f"Teil {part_num}", # This will now be correct
+                "score": score
+            })
+
+    # --- (The rest of the function is unchanged) ---
+    avg_listening = round((scores["listening"]["total_correct"] / scores["listening"]["total_q"]) * 100) if scores["listening"]["total_q"] > 0 else 0
+    avg_reading = round((scores["reading"]["total_correct"] / scores["reading"]["total_q"]) * 100) if scores["reading"]["total_q"] > 0 else 0
 
     total_possible_exams = get_total_possible_exams()
 
     stats = {
-        "listening": {
-            "averageScore": avg_listening,
-            "completedExams": scores["listening"]["exam_count"],
-            "totalExams": total_possible_exams["listening"]
-        },
-        "reading": {
-            "averageScore": avg_reading,
-            "completedExams": scores["reading"]["exam_count"],
-            "totalExams": total_possible_exams["reading"]
-        },
-        # NEW: Return the last 7 exams for the trend chart
-        "performanceTrend": performance_trend[-7:] 
+        "listening": {"averageScore": avg_listening, "completedExams": scores["listening"]["exam_count"], "totalExams": total_possible_exams["listening"]},
+        "reading": {"averageScore": avg_reading, "completedExams": scores["reading"]["exam_count"], "totalExams": total_possible_exams["reading"]},
+        "performanceTrend": performance_trend[-7:],
+        "skillBreakdown": skill_breakdown
     }
     return jsonify(stats)
 

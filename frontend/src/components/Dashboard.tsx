@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { DashboardStats, StatData } from '../types';
+import { DashboardStats, SkillBreakdownPart, StatData } from '../types';
 import PerformanceChart from './PerformanceChart';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
@@ -35,7 +35,6 @@ const Dashboard: React.FC = () => {
     };
 
     const renderStatCard = (type: 'listening' | 'reading', data: StatData | undefined) => {
-        // This function remains exactly the same as before
         const isListening = type === 'listening';
         const title = isListening ? 'Hören' : 'Lesen';
         const bgColor = isListening ? 'bg-sky-100/80' : 'bg-emerald-100/80';
@@ -66,6 +65,35 @@ const Dashboard: React.FC = () => {
         );
     };
 
+    const renderSkillBreakdown = (title: string, data: SkillBreakdownPart[], accentColor: string) => {
+        if (data.length === 0) return null;
+
+        const getBarColor = (score: number) => {
+            if (score < 50) return 'bg-red-500';
+            if (score < 75) return 'bg-yellow-500';
+            return accentColor;
+        };
+
+        return (
+             <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80">
+                <h3 className={`text-xl font-bold text-slate-800 mb-4`}>{title}</h3>
+                <div className="space-y-4">
+                    {data.map(part => (
+                        <div key={part.partName}>
+                            <div className="flex justify-between mb-1">
+                                <span className="text-base font-medium text-slate-700">{part.partName}</span>
+                                <span className={`text-base font-bold ${accentColor === 'bg-sky-600' ? 'text-sky-700' : 'text-emerald-700'}`}>{part.score}%</span>
+                            </div>
+                            <div className="w-full bg-slate-200 rounded-full h-2.5">
+                                <div className={`${getBarColor(part.score)} h-2.5 rounded-full`} style={{ width: `${part.score}%` }}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        )
+    };
+
     if (isLoading) {
         return <p className="text-center text-slate-600 mt-10">Dashboard wird geladen...</p>;
     }
@@ -85,16 +113,27 @@ const Dashboard: React.FC = () => {
                 {stats && renderStatCard('reading', stats.reading)}
             </div>
 
-            {/* --- NEW: Chart Section --- */}
+            {/* --- NEW: Skill Breakdown Section --- */}
+             {stats && (stats.skillBreakdown.listening.length > 0 || stats.skillBreakdown.reading.length > 0) && (
+                <div>
+                    <h2 className="text-2xl font-bold text-slate-800 text-center mb-6">Leistungsanalyse nach Teil</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {renderSkillBreakdown("Hören", stats.skillBreakdown.listening, 'bg-sky-600')}
+                        {renderSkillBreakdown("Lesen", stats.skillBreakdown.reading, 'bg-emerald-600')}
+                    </div>
+                </div>
+            )}
+
+
             {stats && stats.performanceTrend.length > 1 && (
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80" style={{ height: '400px' }}>
                     <PerformanceChart trendData={stats.performanceTrend} />
                 </div>
             )}
             
-            {/* --- Exam Selection Section (remains the same) --- */}
             <div className="max-w-2xl mx-auto text-center bg-white p-10 rounded-2xl shadow-lg border border-slate-200/80">
-                <h2 className="text-3xl font-bold text-slate-800">Wählen Sie Ihre Prüfung</h2>
+                {/* ... Exam Selection Section remains the same ... */}
+                 <h2 className="text-3xl font-bold text-slate-800">Wählen Sie Ihre Prüfung</h2>
                 <p className="mt-2 text-slate-600">Welchen Teil möchten Sie als Nächstes üben?</p>
                 <div className="mt-8 flex flex-col sm:flex-row justify-center gap-6">
                     <Link to="/listening/part/1" onClick={handleSelection} className="px-8 py-4 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 bg-sky-600 text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
