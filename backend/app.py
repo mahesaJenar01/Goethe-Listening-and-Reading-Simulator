@@ -11,7 +11,7 @@ CORS(app)
 # --- Paths for user data ---
 USER_DATA_DIR = 'userdata'
 USER_PERFORMANCE_FILE = os.path.join(USER_DATA_DIR, 'user_performance.json')
-USER_CREDENTIALS_FILE = os.path.join(USER_DATA_DIR, 'users.json') # NEW: Credentials file
+USER_CREDENTIALS_FILE = os.path.join(USER_DATA_DIR, 'users.json')
 
 # --- Helper functions to load/save user credentials ---
 def load_credentials():
@@ -232,6 +232,7 @@ def save_exam_performance():
         "examType": performance_data.get("examType"),
         "totalScore": performance_data.get("totalScore"),
         "totalQuestions": performance_data.get("totalQuestions"),
+        "timeTakenInSeconds": performance_data.get("timeTakenInSeconds"), # NEW: Save time
         "parts": performance_data.get("parts")
     }
 

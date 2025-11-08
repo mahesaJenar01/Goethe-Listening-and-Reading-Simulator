@@ -1,21 +1,18 @@
 import { useEffect } from 'react';
-import { ExamAction } from '../components/ExamSession'; // We will export these types
+import { ExamAction } from '../components/ExamSession';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
 export function useFetchExam(
-    { examType, userId, examParts, dispatch }: {
+    { examType, userId, examParts, dispatch, totalExamTime }: { // NEW: Add totalExamTime
         examType: 'listening' | 'reading' | undefined;
         userId: string;
         examParts: any[];
         dispatch: React.Dispatch<ExamAction>;
+        totalExamTime: number; // NEW
     }
 ) {
     useEffect(() => {
-        // Conditions to run the fetch:
-        // 1. We have an examType.
-        // 2. The examParts array is currently empty.
-        // 3. There isn't an active session saved in localStorage (to prevent re-fetching on refresh).
         if (!examType || examParts.length > 0 || localStorage.getItem('examSession')) {
             return;
         }
@@ -31,19 +28,20 @@ export function useFetchExam(
 
                 if (data.status === 'all_completed') {
                     dispatch({ type: 'FETCH_ALL_COMPLETED' });
-                    localStorage.removeItem('examSession'); // Clean up just in case
+                    localStorage.removeItem('examSession');
                     return;
                 }
                 if (!Array.isArray(data) || data.length === 0) {
                     throw new Error("Received empty or invalid exam data.");
                 }
                 
-                dispatch({ type: 'FETCH_SUCCESS', payload: data });
+                // NEW: Pass parts and totalTime in payload
+                dispatch({ type: 'FETCH_SUCCESS', payload: { parts: data, totalTime: totalExamTime } });
             } catch (error: any) {
                 dispatch({ type: 'FETCH_ERROR', payload: `Prüfung konnte nicht geladen werden: ${error.message}` });
             }
         };
 
         fetchExam();
-    }, [examType, userId, examParts.length, dispatch]); // Dependencies for the fetch effect
+    }, [examType, userId, examParts.length, dispatch, totalExamTime]); // NEW: Add totalExamTime to dependencies
 }

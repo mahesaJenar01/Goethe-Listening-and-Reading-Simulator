@@ -1,4 +1,4 @@
-import React, { useReducer, useMemo, useRef, useEffect } from 'react';
+import React, { useReducer, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ExamView from './ExamView';
 import ResultsView from './ResultsView';
@@ -9,7 +9,13 @@ import {
 import AllExamsCompleted from './AllExamsCompleted';
 import { useExamSessionStorage } from '../hooks/useExamSessionStorage';
 import { useFetchExam } from '../hooks/useFetchExam';
-import { useAuth } from '../contexts/AuthContext'; // NEW: Import useAuth
+import { useAuth } from '../contexts/AuthContext';
+
+// --- NEW: Constants for exam durations in seconds ---
+const EXAM_DURATIONS = {
+    listening: 40 * 60, // 40 minutes
+    reading: 65 * 60,   // 65 minutes
+};
 
 export interface ExamState {
     isLoading: boolean;
@@ -24,37 +30,55 @@ export interface ExamState {
     currentPartIndex: number;
     audioStatus: 'loading' | 'ready' | 'error';
     hasPlaybackStarted: boolean;
+    timeLeft: number; // NEW: Time left in seconds
+    examStartTime: number | null; // NEW: Timestamp when the exam was started
+    timeTaken: number | null; // NEW: Time taken to complete
 }
 
 export type ExamAction =
   | { type: 'FETCH_START' }
-  | { type: 'FETCH_SUCCESS'; payload: ExamPart[] }
+  | { type: 'FETCH_SUCCESS'; payload: { parts: ExamPart[], totalTime: number } }
   | { type: 'FETCH_ALL_COMPLETED' }
   | { type: 'FETCH_ERROR'; payload: string }
   | { type: 'LOAD_FROM_STORAGE'; payload: Partial<ExamState> }
   | { type: 'ANSWER_QUESTION'; payload: { questionId: string; answer: any } }
   | { type: 'NAVIGATE_PART'; payload: { nextIndex: number, previousIndex: number } }
-  | { type: 'SUBMIT_EXAM'; payload: { score: number } }
+  | { type: 'SUBMIT_EXAM'; payload: { score: number, timeTaken: number } }
   | { type: 'UPDATE_AUDIO_PROGRESS'; payload: { src: string; time: number } }
   | { type: 'SET_AUDIO_STATUS'; payload: 'loading' | 'ready' | 'error' }
-  | { type: 'SET_HAS_PLAYBACK_STARTED'; payload: boolean };
+  | { type: 'SET_HAS_PLAYBACK_STARTED'; payload: boolean }
+  | { type: 'TIMER_TICK' }; // NEW: Action for timer
 
 const examReducer = (state: ExamState, action: ExamAction): ExamState => {
     switch (action.type) {
         case 'FETCH_START':
             return { ...state, isLoading: true, error: null };
         case 'FETCH_SUCCESS':
-            return { ...state, isLoading: false, examParts: action.payload };
+            return { 
+                ...state, 
+                isLoading: false, 
+                examParts: action.payload.parts,
+                timeLeft: action.payload.totalTime, // NEW: Initialize timer
+                examStartTime: Date.now() // NEW: Set start time
+            };
         case 'FETCH_ALL_COMPLETED':
             return { ...state, isLoading: false, areAllExamsCompleted: true };
         case 'FETCH_ERROR':
             return { ...state, isLoading: false, error: action.payload };
         
         case 'LOAD_FROM_STORAGE':
+            const savedState = action.payload;
+            let newTimeLeft = savedState.timeLeft || 0;
+            // Recalculate time left if loaded from storage
+            if (savedState.examStartTime && savedState.timeLeft) {
+                const elapsedTime = Math.floor((Date.now() - savedState.examStartTime) / 1000);
+                newTimeLeft = Math.max(0, savedState.timeLeft - elapsedTime);
+            }
             return { 
                 ...state, 
-                ...action.payload,
-                playedListeningParts: new Set(action.payload.playedListeningParts || []) 
+                ...savedState,
+                timeLeft: newTimeLeft,
+                playedListeningParts: new Set(savedState.playedListeningParts || []) 
             };
 
         case 'ANSWER_QUESTION':
@@ -87,7 +111,7 @@ const examReducer = (state: ExamState, action: ExamAction): ExamState => {
             };
 
         case 'SUBMIT_EXAM':
-            return { ...state, isSubmitted: true, score: action.payload.score };
+            return { ...state, isSubmitted: true, score: action.payload.score, timeTaken: action.payload.timeTaken };
         
         case 'UPDATE_AUDIO_PROGRESS':
             if (action.payload.time > (state.audioProgress[action.payload.src] || 0)) {
@@ -103,21 +127,23 @@ const examReducer = (state: ExamState, action: ExamAction): ExamState => {
 
         case 'SET_HAS_PLAYBACK_STARTED':
             return { ...state, hasPlaybackStarted: action.payload };
+        
+        case 'TIMER_TICK':
+            return { ...state, timeLeft: Math.max(0, state.timeLeft - 1) };
 
         default:
             return state;
     }
 };
 
-// REMOVED: getUserId function is no longer needed.
-
 const ExamSession: React.FC = () => {
     const { examType, partIndex } = useParams<{ examType: 'listening' | 'reading', partIndex: string }>();
     const navigate = useNavigate();
     const location = useLocation();
-    const { userId } = useAuth(); // NEW: Get userId from context
+    const { userId } = useAuth();
 
     const initialPartIndex = parseInt(partIndex || '1', 10) - 1;
+    const totalExamTime = examType ? EXAM_DURATIONS[examType] : 0;
 
     const initialState: ExamState = {
         isLoading: false,
@@ -132,82 +158,27 @@ const ExamSession: React.FC = () => {
         currentPartIndex: initialPartIndex,
         audioStatus: 'loading',
         hasPlaybackStarted: false,
+        timeLeft: totalExamTime,
+        examStartTime: null,
+        timeTaken: null,
     };
     
     const [state, dispatch] = useReducer(examReducer, initialState);
     const {
         isLoading, error, examParts, allUserAnswers, isSubmitted, score,
         playedListeningParts, audioProgress, areAllExamsCompleted,
-        currentPartIndex, audioStatus, hasPlaybackStarted
+        currentPartIndex, audioStatus, hasPlaybackStarted, timeLeft, timeTaken
     } = state;
 
     const audioRef = useRef<HTMLAudioElement>(null);
     
-    // The protected route ensures userId is a string here.
-    useFetchExam({ examType, userId: userId!, examParts, dispatch });
+    useFetchExam({ examType, userId: userId!, examParts, dispatch, totalExamTime });
     useExamSessionStorage(state, dispatch);
-    
-    useEffect(() => {
-        const targetPath = `/${examType}/part/${currentPartIndex + 1}`;
-        if (location.pathname !== targetPath && !isLoading && examParts.length > 0) {
-            navigate(targetPath, { replace: true });
-        }
-    }, [currentPartIndex, examType, navigate, location.pathname, isLoading, examParts.length]);
 
-    const handleAnswerChange = (questionId: string, answer: any) => {
-        dispatch({ type: 'ANSWER_QUESTION', payload: { questionId, answer } });
-    };
+    const handleSubmit = useCallback(async () => {
+        // Prevent double submission
+        if (isSubmitted) return;
 
-    const handleNavigation = (nextIndex: number) => {
-        window.scrollTo(0, 0);
-        if (audioRef.current) {
-            audioRef.current.pause();
-        }
-        dispatch({ type: 'NAVIGATE_PART', payload: { nextIndex, previousIndex: currentPartIndex } });
-    };
-
-    const handleNextPart = () => {
-        if (currentPartIndex < examParts.length - 1) {
-            handleNavigation(currentPartIndex + 1);
-        }
-    };
-
-    const handlePreviousPart = () => {
-        if (currentPartIndex > 0) {
-            handleNavigation(currentPartIndex - 1);
-        }
-    };
-    
-    const handleRestart = () => {
-        localStorage.removeItem('examSession');
-        navigate('/');
-    };
-    
-    const handlePlayAudio = () => {
-        const audio = audioRef.current;
-        const currentPart = examParts[currentPartIndex];
-        
-        if (audio && currentPart && 'audioSrc' in currentPart) {
-            const audioSrc = currentPart.audioSrc as string;
-            const savedTime = audioProgress[audioSrc] || 0;
-            const resumeTime = Math.max(0, savedTime - 5);
-            
-            audio.currentTime = resumeTime;
-            audio.play();
-            dispatch({ type: 'SET_HAS_PLAYBACK_STARTED', payload: true });
-        }
-    };
-
-    const handleAudioTimeUpdate = () => {
-        const audio = audioRef.current;
-        if (!audio || !examParts[currentPartIndex]) return;
-        const currentPart = examParts[currentPartIndex];
-        if ('audioSrc' in currentPart) {
-            dispatch({ type: 'UPDATE_AUDIO_PROGRESS', payload: { src: currentPart.audioSrc as string, time: audio.currentTime } });
-        }
-    };
-
-    const handleSubmit = async () => {
         // 1. Calculate the final score
         let currentScore = 0;
         examParts.forEach(part => {
@@ -254,12 +225,15 @@ const ExamSession: React.FC = () => {
             }
         });
 
+        const finalTimeTaken = totalExamTime - timeLeft;
+
         // 2. Prepare the data payload for the API with detailed question results
         const performanceData = {
-            userId: userId, // Use userId from context
+            userId: userId,
             examType: examType,
             totalScore: currentScore,
             totalQuestions: totalQuestions,
+            timeTakenInSeconds: finalTimeTaken, // NEW: Add time taken
             parts: examParts.map(part => {
                 const questionsPerformance: any[] = [];
                 
@@ -362,7 +336,6 @@ const ExamSession: React.FC = () => {
                 body: JSON.stringify(performanceData),
             });
             if (!response.ok) {
-                // Log an error if saving fails, but don't block the user
                 console.error("Failed to save exam performance:", response.statusText);
             }
         } catch (error) {
@@ -370,9 +343,85 @@ const ExamSession: React.FC = () => {
         }
 
         // 4. Update local state to show the results view
-        dispatch({ type: 'SUBMIT_EXAM', payload: { score: currentScore } });
+        dispatch({ type: 'SUBMIT_EXAM', payload: { score: currentScore, timeTaken: finalTimeTaken } });
         window.scrollTo(0, 0);
-        localStorage.removeItem('examSession'); // Clean up the session storage
+        localStorage.removeItem('examSession');
+    }, [isSubmitted, examParts, allUserAnswers, totalExamTime, timeLeft, userId, examType]);
+
+    // --- NEW: Timer useEffect ---
+    useEffect(() => {
+        // Only run the timer if an exam is active and not submitted
+        if (examParts.length > 0 && !isSubmitted) {
+            if (timeLeft <= 0) {
+                handleSubmit();
+                return;
+            }
+            const timerId = setInterval(() => {
+                dispatch({ type: 'TIMER_TICK' });
+            }, 1000);
+
+            return () => clearInterval(timerId); // Cleanup on unmount or state change
+        }
+    }, [examParts.length, isSubmitted, timeLeft, handleSubmit]);
+    
+    useEffect(() => {
+        const targetPath = `/${examType}/part/${currentPartIndex + 1}`;
+        if (location.pathname !== targetPath && !isLoading && examParts.length > 0) {
+            navigate(targetPath, { replace: true });
+        }
+    }, [currentPartIndex, examType, navigate, location.pathname, isLoading, examParts.length]);
+
+    const handleAnswerChange = (questionId: string, answer: any) => {
+        dispatch({ type: 'ANSWER_QUESTION', payload: { questionId, answer } });
+    };
+
+    const handleNavigation = (nextIndex: number) => {
+        window.scrollTo(0, 0);
+        if (audioRef.current) {
+            audioRef.current.pause();
+        }
+        dispatch({ type: 'NAVIGATE_PART', payload: { nextIndex, previousIndex: currentPartIndex } });
+    };
+
+    const handleNextPart = () => {
+        if (currentPartIndex < examParts.length - 1) {
+            handleNavigation(currentPartIndex + 1);
+        }
+    };
+
+    const handlePreviousPart = () => {
+        if (currentPartIndex > 0) {
+            handleNavigation(currentPartIndex - 1);
+        }
+    };
+    
+    const handleRestart = () => {
+        localStorage.removeItem('examSession');
+        navigate('/');
+    };
+    
+    const handlePlayAudio = () => {
+        const audio = audioRef.current;
+        const currentPart = examParts[currentPartIndex];
+        
+        if (audio && currentPart && 'audioSrc' in currentPart) {
+            const audioSrc = currentPart.audioSrc as string;
+            const savedTime = audioProgress[audioSrc] || 0;
+            const resumeTime = Math.max(0, savedTime - 5);
+            
+            audio.currentTime = resumeTime;
+            audio.play();
+            dispatch({ type: 'SET_HAS_PLAYBACK_STARTED', payload: true });
+        }
+    };
+
+    const handleAudioTimeUpdate = () => {
+        const audio = audioRef.current;
+        if (!audio || !examParts[currentPartIndex]) return;
+        const currentPart = examParts[currentPartIndex];
+        if ('audioSrc' in currentPart) {
+            dispatch({ type: 'UPDATE_AUDIO_PROGRESS', payload: { src: currentPart.audioSrc as string, time: audio.currentTime } });
+        }
     };
 
     const getPartQuestionCount = (part: ExamPart): number => {
@@ -415,14 +464,13 @@ const ExamSession: React.FC = () => {
         return questionsToCheck.every(q => allUserAnswers[q.id] !== undefined && allUserAnswers[q.id] !== '');
     }, [currentPartIndex, allUserAnswers, examParts]);
 
-    // Render logic
     if (isLoading) return <p className="text-center text-slate-600">Prüfung wird geladen...</p>;
     if (error) return <p className="text-center text-red-600 font-semibold">{error}</p>;
     if (areAllExamsCompleted) {
         return <AllExamsCompleted examType={examType} />;
     }
     if (isSubmitted) {
-        return <ResultsView score={score} totalQuestions={totalQuestions} onRestart={handleRestart} examParts={examParts} allUserAnswers={allUserAnswers} getPartQuestionCount={getPartQuestionCount} />;
+        return <ResultsView score={score} totalQuestions={totalQuestions} onRestart={handleRestart} examParts={examParts} allUserAnswers={allUserAnswers} getPartQuestionCount={getPartQuestionCount} timeTaken={timeTaken} />;
     }
     if (examParts.length === 0 || !examParts[currentPartIndex]) {
         return <p className="text-center text-slate-600">Prüfung wird vorbereitet...</p>;
@@ -449,6 +497,7 @@ const ExamSession: React.FC = () => {
             handlePlayAudio={handlePlayAudio}
             handleAudioTimeUpdate={handleAudioTimeUpdate}
             hasPlaybackStarted={hasPlaybackStarted}
+            timeLeft={timeLeft} // NEW: Pass timeLeft to ExamView
         />
     );
 };

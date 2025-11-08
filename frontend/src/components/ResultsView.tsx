@@ -28,6 +28,7 @@ interface ResultsViewProps {
     examParts: ExamPart[];
     allUserAnswers: { [key: string]: any };
     getPartQuestionCount: (part: ExamPart) => number;
+    timeTaken: number | null; // NEW: Time taken prop
 }
 
 const ResultsView: React.FC<ResultsViewProps> = ({
@@ -36,16 +37,24 @@ const ResultsView: React.FC<ResultsViewProps> = ({
     onRestart,
     examParts,
     allUserAnswers,
-    getPartQuestionCount
+    getPartQuestionCount,
+    timeTaken, // NEW
 }) => {
     
+    // --- NEW: Helper to format time ---
+    const formatTime = (totalSeconds: number | null) => {
+        if (totalSeconds === null) return null;
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes} Minuten und ${seconds} Sekunden`;
+    };
+
     const renderResultsForPart = (part: ExamPart, partIndex: number) => {
         let questionCounter = 1;
         for (let i = 0; i < partIndex; i++) {
             questionCounter += getPartQuestionCount(examParts[i]);
         }
 
-        // UPDATED: Switch statement with new consistent types
         switch (part.type) {
             case 'listening-part-1':
                 return (part as ListeningPart1).textBlocks.map((block, blockIndex) => {
@@ -86,6 +95,14 @@ const ResultsView: React.FC<ResultsViewProps> = ({
     return (
         <>
             <Results score={score} total={totalQuestions} onRestart={onRestart} />
+
+            {/* --- NEW: Display time taken --- */}
+            {timeTaken !== null && (
+                <div className="mt-6 text-center text-slate-600 font-medium">
+                    Benötigte Zeit: {formatTime(timeTaken)}
+                </div>
+            )}
+            
             <div className="mt-12">
                 <h2 className="text-3xl font-bold text-center text-slate-800 mb-8">Detaillierte Auswertung</h2>
                 {examParts.map((part, index) => (

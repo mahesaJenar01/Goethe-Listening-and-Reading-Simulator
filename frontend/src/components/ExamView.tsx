@@ -19,6 +19,7 @@ import { ReadingMultiTextCard } from './ReadingMultiTextCard';
 import { ReadingAssignmentCard } from './ReadingAssignmentCard';
 import { ReadingYesNoCard } from './ReadingYesNoCard';
 import { ReadingRegulationsCard } from './ReadingRegulationsCard';
+import Timer from './Timer'; // NEW: Import Timer
 
 interface ExamViewProps {
     examType: 'listening' | 'reading';
@@ -40,10 +41,9 @@ interface ExamViewProps {
     handlePlayAudio: () => void;
     handleAudioTimeUpdate: () => void;
     hasPlaybackStarted: boolean;
+    timeLeft: number; // NEW: timeLeft prop
 }
 
-// --- 1. Create the Component Map ---
-// This object maps the 'type' string from your data directly to a React component.
 const PART_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
     'reading-part-1': ReadingBlogCard,
     'reading-part-2': ReadingMultiTextCard,
@@ -51,7 +51,6 @@ const PART_COMPONENTS: { [key: string]: React.ComponentType<any> } = {
     'reading-part-4': ReadingYesNoCard,
     'reading-part-5': ReadingRegulationsCard,
 };
-// --- End of new code ---
 
 const ExamView: React.FC<ExamViewProps> = ({
     examType,
@@ -73,6 +72,7 @@ const ExamView: React.FC<ExamViewProps> = ({
     handlePlayAudio,
     handleAudioTimeUpdate,
     hasPlaybackStarted,
+    timeLeft, // NEW
 }) => {
 
     const renderExample = () => {
@@ -202,7 +202,11 @@ const ExamView: React.FC<ExamViewProps> = ({
     return (
          <>
             <div className="mb-6 bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80">
-                <h2 className="text-2xl font-bold text-slate-800">Teil {currentPartIndex + 1}</h2>
+                {/* --- NEW: Timer display added here --- */}
+                <div className="flex justify-between items-center mb-4">
+                    <h2 className="text-2xl font-bold text-slate-800">Teil {currentPartIndex + 1}</h2>
+                    <Timer timeLeft={timeLeft} />
+                </div>
                 <p className="mt-2 text-slate-600">{currentPart.instruction}</p>
                 
                 { 'workingTime' in currentPart && (
