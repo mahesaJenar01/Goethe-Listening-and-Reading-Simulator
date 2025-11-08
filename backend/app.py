@@ -8,28 +8,50 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-# --- Path for user performance data ---
-USER_DATA_FILE = os.path.join('userdata', 'user_performance.json')
+# --- Paths for user data ---
+USER_DATA_DIR = 'userdata'
+USER_PERFORMANCE_FILE = os.path.join(USER_DATA_DIR, 'user_performance.json')
+USER_CREDENTIALS_FILE = os.path.join(USER_DATA_DIR, 'users.json') # NEW: Credentials file
 
-# --- Helper function to load user data ---
-def load_user_data():
-    """Loads the entire user performance data from the JSON file."""
-    if not os.path.exists(USER_DATA_FILE):
+# --- Helper functions to load/save user credentials ---
+def load_credentials():
+    """Loads user credentials from the JSON file."""
+    if not os.path.exists(USER_CREDENTIALS_FILE):
         return {}
     try:
-        with open(USER_DATA_FILE, 'r', encoding='utf-8') as f:
+        with open(USER_CREDENTIALS_FILE, 'r', encoding='utf-8') as f:
             return json.load(f)
     except (json.JSONDecodeError, FileNotFoundError):
         return {}
 
-# --- Helper function to save user data ---
-def save_user_data(data):
-    """Saves the entire user performance data to the JSON file."""
+def save_credentials(data):
+    """Saves user credentials to the JSON file."""
     try:
-        with open(USER_DATA_FILE, 'w', encoding='utf-8') as f:
+        with open(USER_CREDENTIALS_FILE, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=4, ensure_ascii=False)
     except Exception as e:
-        print(f"Error saving user data: {e}")
+        print(f"Error saving user credentials: {e}")
+
+
+# --- Helper function to load user performance data ---
+def load_user_performance_data():
+    """Loads the entire user performance data from the JSON file."""
+    if not os.path.exists(USER_PERFORMANCE_FILE):
+        return {}
+    try:
+        with open(USER_PERFORMANCE_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    except (json.JSONDecodeError, FileNotFoundError):
+        return {}
+
+# --- Helper function to save user performance data ---
+def save_user_performance_data(data):
+    """Saves the entire user performance data to the JSON file."""
+    try:
+        with open(USER_PERFORMANCE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(data, f, indent=4, ensure_ascii=False)
+    except Exception as e:
+        print(f"Error saving user performance data: {e}")
 
 # --- Helper function to get completed instance IDs for a user ---
 def get_completed_instance_ids(user_id):
@@ -37,7 +59,7 @@ def get_completed_instance_ids(user_id):
     Parses user performance data and returns a set of all
     unique part (instance) IDs a user has completed.
     """
-    all_data = load_user_data()
+    all_data = load_user_performance_data()
     user_data = all_data.get(str(user_id))
     if not user_data:
         return set()
@@ -67,6 +89,42 @@ def load_part_data(exam_type, part_number):
         return None
 
 # --- API Routes ---
+
+@app.route('/api/register', methods=['POST'])
+def register_user():
+    """Registers a new user."""
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({"error": "Username and password are required."}), 400
+
+    credentials = load_credentials()
+    if username in credentials:
+        return jsonify({"error": "Username already exists."}), 409 # Conflict
+
+    credentials[username] = password # Note: Storing passwords in plain text is insecure.
+    save_credentials(credentials)
+
+    return jsonify({"success": True, "message": "User registered successfully."}), 201
+
+@app.route('/api/login', methods=['POST'])
+def login_user():
+    """Logs in a user."""
+    data = request.json
+    username = data.get('username')
+    password = data.get('password')
+
+    if not username or not password:
+        return jsonify({"error": "Username and password are required."}), 400
+
+    credentials = load_credentials()
+    if username in credentials and credentials[username] == password:
+        return jsonify({"success": True, "userId": username})
+    
+    return jsonify({"error": "Invalid username or password."}), 401 # Unauthorized
+
 
 @app.route('/api/listening-exam', methods=['GET'])
 def get_listening_exam():
@@ -166,7 +224,7 @@ def save_exam_performance():
     if not user_id:
         return jsonify({"error": "User ID is required."}), 400
 
-    all_users_data = load_user_data()
+    all_users_data = load_user_performance_data()
     user_data = all_users_data.get(str(user_id), {})
     exam_timestamp = datetime.now().isoformat()
 
@@ -178,12 +236,12 @@ def save_exam_performance():
     }
 
     all_users_data[str(user_id)] = user_data
-    save_user_data(all_users_data)
+    save_user_performance_data(all_users_data)
 
     return jsonify({"success": True, "message": "Exam performance saved."}), 200
 
 
 if __name__ == '__main__':
-    if not os.path.exists('userdata'):
-        os.makedirs('userdata')
+    if not os.path.exists(USER_DATA_DIR):
+        os.makedirs(USER_DATA_DIR)
     app.run(debug=True)

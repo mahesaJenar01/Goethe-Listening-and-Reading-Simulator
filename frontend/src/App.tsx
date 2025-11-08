@@ -1,13 +1,15 @@
 import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import ExamSelector from './components/ExamSelector';
 import ExamSession from './components/ExamSession';
+import Auth from './components/Auth'; // NEW: Import Auth component
+import { useAuth } from './contexts/AuthContext'; // NEW: Import useAuth hook
 
 const App: React.FC = () => {
   const location = useLocation();
+  const { userId } = useAuth(); // NEW: Get user state from context
   
-  // Determine the exam type from the URL for the Header
   const getExamTypeFromPath = (): 'listening' | 'reading' | null => {
     if (location.pathname.startsWith('/listening')) return 'listening';
     if (location.pathname.startsWith('/reading')) return 'reading';
@@ -20,13 +22,22 @@ const App: React.FC = () => {
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <Routes>
-            {/* Route for the main selection screen */}
-            <Route path="/" element={<ExamSelector />} />
-
-            {/* Route for the active exam session */}
-            <Route path="/:examType/part/:partIndex" element={<ExamSession />} />
-            
-            {/* You could add other routes here later, e.g., for a user profile page */}
+            {userId ? (
+              // Routes accessible only when logged in
+              <>
+                <Route path="/" element={<ExamSelector />} />
+                <Route path="/:examType/part/:partIndex" element={<ExamSession />} />
+                {/* Redirect any other path to home when logged in */}
+                <Route path="*" element={<Navigate to="/" />} />
+              </>
+            ) : (
+              // Routes accessible only when logged out
+              <>
+                <Route path="/login" element={<Auth />} />
+                {/* Redirect any other path to login when logged out */}
+                <Route path="*" element={<Navigate to="/login" />} />
+              </>
+            )}
           </Routes>
         </div>
       </main>

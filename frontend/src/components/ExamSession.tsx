@@ -9,6 +9,7 @@ import {
 import AllExamsCompleted from './AllExamsCompleted';
 import { useExamSessionStorage } from '../hooks/useExamSessionStorage';
 import { useFetchExam } from '../hooks/useFetchExam';
+import { useAuth } from '../contexts/AuthContext'; // NEW: Import useAuth
 
 export interface ExamState {
     isLoading: boolean;
@@ -108,19 +109,13 @@ const examReducer = (state: ExamState, action: ExamAction): ExamState => {
     }
 };
 
-const getUserId = (): string => {
-    let userId = localStorage.getItem('examAppUserId');
-    if (!userId) {
-        userId = String(Math.floor(Math.random() * 1000000) + 1);
-        localStorage.setItem('examAppUserId', userId);
-    }
-    return userId;
-};
+// REMOVED: getUserId function is no longer needed.
 
 const ExamSession: React.FC = () => {
     const { examType, partIndex } = useParams<{ examType: 'listening' | 'reading', partIndex: string }>();
     const navigate = useNavigate();
     const location = useLocation();
+    const { userId } = useAuth(); // NEW: Get userId from context
 
     const initialPartIndex = parseInt(partIndex || '1', 10) - 1;
 
@@ -147,10 +142,10 @@ const ExamSession: React.FC = () => {
     } = state;
 
     const audioRef = useRef<HTMLAudioElement>(null);
-    const userId = useMemo(() => getUserId(), []);
-
+    
+    // The protected route ensures userId is a string here.
+    useFetchExam({ examType, userId: userId!, examParts, dispatch });
     useExamSessionStorage(state, dispatch);
-    useFetchExam({ examType, userId, examParts, dispatch });
     
     useEffect(() => {
         const targetPath = `/${examType}/part/${currentPartIndex + 1}`;
@@ -212,7 +207,6 @@ const ExamSession: React.FC = () => {
         }
     };
 
-    // --- THIS IS THE FIX ---
     const handleSubmit = async () => {
         // 1. Calculate the final score
         let currentScore = 0;
@@ -262,7 +256,7 @@ const ExamSession: React.FC = () => {
 
         // 2. Prepare the data payload for the API with detailed question results
         const performanceData = {
-            userId: userId,
+            userId: userId, // Use userId from context
             examType: examType,
             totalScore: currentScore,
             totalQuestions: totalQuestions,
@@ -380,7 +374,6 @@ const ExamSession: React.FC = () => {
         window.scrollTo(0, 0);
         localStorage.removeItem('examSession'); // Clean up the session storage
     };
-    // --- END OF FIX ---
 
     const getPartQuestionCount = (part: ExamPart): number => {
         switch (part.type) {
@@ -422,7 +415,7 @@ const ExamSession: React.FC = () => {
         return questionsToCheck.every(q => allUserAnswers[q.id] !== undefined && allUserAnswers[q.id] !== '');
     }, [currentPartIndex, allUserAnswers, examParts]);
 
-    // Render logic remains the same
+    // Render logic
     if (isLoading) return <p className="text-center text-slate-600">Prüfung wird geladen...</p>;
     if (error) return <p className="text-center text-red-600 font-semibold">{error}</p>;
     if (areAllExamsCompleted) {
