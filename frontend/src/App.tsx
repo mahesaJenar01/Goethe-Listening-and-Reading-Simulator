@@ -1,14 +1,14 @@
 import React from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import ExamSelector from './components/ExamSelector';
+import Dashboard from './components/Dashboard';         // NEW: Import Dashboard
 import ExamSession from './components/ExamSession';
-import Auth from './components/Auth'; // NEW: Import Auth component
-import { useAuth } from './contexts/AuthContext'; // NEW: Import useAuth hook
+import Auth from './components/Auth';
+import { useAuth } from './contexts/AuthContext';
 
 const App: React.FC = () => {
   const location = useLocation();
-  const { userId } = useAuth(); // NEW: Get user state from context
+  const { userId } = useAuth();
   
   const getExamTypeFromPath = (): 'listening' | 'reading' | null => {
     if (location.pathname.startsWith('/listening')) return 'listening';
@@ -25,7 +25,8 @@ const App: React.FC = () => {
             {userId ? (
               // Routes accessible only when logged in
               <>
-                <Route path="/" element={<ExamSelector />} />
+                {/* UPDATED: The home route now points to the Dashboard */}
+                <Route path="/" element={<Dashboard />} />
                 <Route path="/:examType/part/:partIndex" element={<ExamSession />} />
                 {/* Redirect any other path to home when logged in */}
                 <Route path="*" element={<Navigate to="/" />} />

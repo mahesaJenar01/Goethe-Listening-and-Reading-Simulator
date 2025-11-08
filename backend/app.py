@@ -13,7 +13,7 @@ USER_DATA_DIR = 'userdata'
 USER_PERFORMANCE_FILE = os.path.join(USER_DATA_DIR, 'user_performance.json')
 USER_CREDENTIALS_FILE = os.path.join(USER_DATA_DIR, 'users.json')
 
-# --- Helper functions to load/save user credentials ---
+# --- Helper functions (load_credentials, save_credentials, etc. remain the same) ---
 def load_credentials():
     """Loads user credentials from the JSON file."""
     if not os.path.exists(USER_CREDENTIALS_FILE):
@@ -32,8 +32,6 @@ def save_credentials(data):
     except Exception as e:
         print(f"Error saving user credentials: {e}")
 
-
-# --- Helper function to load user performance data ---
 def load_user_performance_data():
     """Loads the entire user performance data from the JSON file."""
     if not os.path.exists(USER_PERFORMANCE_FILE):
@@ -44,7 +42,33 @@ def load_user_performance_data():
     except (json.JSONDecodeError, FileNotFoundError):
         return {}
 
-# --- Helper function to save user performance data ---
+def get_total_possible_exams():
+    """
+    Determines the total number of unique exams possible, which is limited
+    by the exam part with the fewest instances for each exam type.
+    """
+    totals = {"listening": float('inf'), "reading": float('inf')}
+    
+    # Calculate for Listening
+    listening_part_counts = []
+    for i in range(1, 5): # 4 parts for listening
+        part_data = load_part_data('listening', i)
+        if part_data:
+            listening_part_counts.append(len(part_data))
+    if listening_part_counts:
+        totals["listening"] = min(listening_part_counts)
+
+    # Calculate for Reading
+    reading_part_counts = []
+    for i in range(1, 6): # 5 parts for reading
+        part_data = load_part_data('reading', i)
+        if part_data:
+            reading_part_counts.append(len(part_data))
+    if reading_part_counts:
+        totals["reading"] = min(reading_part_counts)
+        
+    return totals
+
 def save_user_performance_data(data):
     """Saves the entire user performance data to the JSON file."""
     try:
@@ -53,7 +77,6 @@ def save_user_performance_data(data):
     except Exception as e:
         print(f"Error saving user performance data: {e}")
 
-# --- Helper function to get completed instance IDs for a user ---
 def get_completed_instance_ids(user_id):
     """
     Parses user performance data and returns a set of all
@@ -72,7 +95,6 @@ def get_completed_instance_ids(user_id):
                     completed_ids.add(part["partId"])
     return completed_ids
 
-# --- Helper function to load part data ---
 def load_part_data(exam_type, part_number):
     """
     Loads a dictionary of instances for a specific part from its JSON file.
@@ -88,25 +110,45 @@ def load_part_data(exam_type, part_number):
     except (FileNotFoundError, json.JSONDecodeError):
         return None
 
-# --- API Routes ---
+# --- NEW: Helper to get total number of unique exam parts available ---
+def get_total_part_counts():
+    """Counts the total number of unique part instances available in the data files."""
+    counts = {"listening": 0, "reading": 0}
+    for exam_type in counts.keys():
+        num_parts = 4 if exam_type == 'listening' else 5
+        total_instances = 0
+        for i in range(1, num_parts + 1):
+            part_data = load_part_data(exam_type, i)
+            if part_data:
+                total_instances += len(part_data)
+        counts[exam_type] = total_instances
+    return counts
 
+# --- API Routes (register, login, exam fetches remain the same) ---
 @app.route('/api/register', methods=['POST'])
 def register_user():
-    """Registers a new user."""
+    """Registers a new user with validation."""
     data = request.json
     username = data.get('username')
     password = data.get('password')
 
     if not username or not password:
         return jsonify({"error": "Username and password are required."}), 400
+    if not (4 <= len(username) <= 16):
+        return jsonify({"error": "Username must be between 4 to 16 characters long."}), 400
+    if not username.isalnum():
+        return jsonify({"error": "Username cannot contain symbols or special characters."}), 400
+    if not any(char.isalpha() for char in username) or not any(char.isdigit() for char in username):
+        return jsonify({"error": "Username must be a combination of letters and numbers."}), 400
+    if len(password) < 8:
+        return jsonify({"error": "Password must be at least 8 characters long."}), 400
 
     credentials = load_credentials()
     if username in credentials:
-        return jsonify({"error": "Username already exists."}), 409 # Conflict
+        return jsonify({"error": "Username already exists."}), 409
 
-    credentials[username] = password # Note: Storing passwords in plain text is insecure.
+    credentials[username] = password
     save_credentials(credentials)
-
     return jsonify({"success": True, "message": "User registered successfully."}), 201
 
 @app.route('/api/login', methods=['POST'])
@@ -123,124 +165,131 @@ def login_user():
     if username in credentials and credentials[username] == password:
         return jsonify({"success": True, "userId": username})
     
-    return jsonify({"error": "Invalid username or password."}), 401 # Unauthorized
+    return jsonify({"error": "Invalid username or password."}), 401
 
 
 @app.route('/api/listening-exam', methods=['GET'])
 def get_listening_exam():
-    """
-    Generates a random listening exam. If a userId is provided, it attempts
-    to select instances the user has not yet completed. If all are completed,
-    it returns a special status.
-    """
     user_id = request.args.get("userId")
     completed_ids = get_completed_instance_ids(user_id) if user_id else set()
-    
     exam = []
     number_of_parts = 4
     try:
-        # Check if all instances in any part-type have been completed
         is_fully_completed = False
         for i in range(1, number_of_parts + 1):
             part_instances_dict = load_part_data('listening', i)
             if not part_instances_dict:
                 return jsonify({"error": f"Could not load data for listening part {i}."}), 500
-            
             all_instance_ids = {inst.get("id") for inst in part_instances_dict.values()}
-            
-            # If the set of all IDs is a subset of completed IDs, this part is exhausted
             if all_instance_ids and all_instance_ids.issubset(completed_ids):
                 is_fully_completed = True
                 break
-
         if is_fully_completed:
             return jsonify({"status": "all_completed", "message": "User has completed all available listening exams."})
-
-        # If we get here, a unique exam can be built
         for i in range(1, number_of_parts + 1):
             part_instances_dict = load_part_data('listening', i)
             all_instances = list(part_instances_dict.values())
-            
             available_instances = [inst for inst in all_instances if inst.get("id") not in completed_ids]
-            
-            # This is now guaranteed to have at least one item
             exam.append(random.choice(available_instances))
-        
         return jsonify(exam)
-
     except (IndexError, TypeError, Exception) as e:
         return jsonify({"error": "Failed to assemble a complete listening exam.", "details": str(e)}), 500
 
-
 @app.route('/api/reading-exam', methods=['GET'])
 def get_reading_exam():
-    """
-    Generates a random reading exam, handling the "all completed" state.
-    """
     user_id = request.args.get("userId")
     completed_ids = get_completed_instance_ids(user_id) if user_id else set()
-
     exam = []
     number_of_parts = 5
     try:
-        # Check for completion across all parts first
         is_fully_completed = False
         for i in range(1, number_of_parts + 1):
             part_instances_dict = load_part_data('reading', i)
             if not part_instances_dict:
                  return jsonify({"error": f"Could not load data for reading part {i}."}), 500
-            
             all_instance_ids = {inst.get("id") for inst in part_instances_dict.values()}
             if all_instance_ids and all_instance_ids.issubset(completed_ids):
                 is_fully_completed = True
                 break
-        
         if is_fully_completed:
             return jsonify({"status": "all_completed", "message": "User has completed all available reading exams."})
-
-        # If not fully completed, build the exam with unique parts
         for i in range(1, number_of_parts + 1):
             part_instances_dict = load_part_data('reading', i)
             all_instances = list(part_instances_dict.values())
-            
             available_instances = [inst for inst in all_instances if inst.get("id") not in completed_ids]
-
             exam.append(random.choice(available_instances))
-            
         return jsonify(exam)
-
     except (IndexError, TypeError, Exception) as e:
         return jsonify({"error": "Failed to assemble a complete reading exam.", "details": str(e)}), 500
 
-
 @app.route('/api/save-exam', methods=['POST'])
 def save_exam_performance():
-    """
-    Saves the results of a completed exam for a user.
-    """
     performance_data = request.json
     user_id = performance_data.get("userId")
-
     if not user_id:
         return jsonify({"error": "User ID is required."}), 400
-
     all_users_data = load_user_performance_data()
     user_data = all_users_data.get(str(user_id), {})
     exam_timestamp = datetime.now().isoformat()
-
     user_data[exam_timestamp] = {
         "examType": performance_data.get("examType"),
         "totalScore": performance_data.get("totalScore"),
         "totalQuestions": performance_data.get("totalQuestions"),
-        "timeTakenInSeconds": performance_data.get("timeTakenInSeconds"), # NEW: Save time
+        "timeTakenInSeconds": performance_data.get("timeTakenInSeconds"),
         "parts": performance_data.get("parts")
     }
-
     all_users_data[str(user_id)] = user_data
     save_user_performance_data(all_users_data)
-
     return jsonify({"success": True, "message": "Exam performance saved."}), 200
 
+# --- NEW: Dashboard Stats API Route ---
+@app.route('/api/dashboard-stats', methods=['GET'])
+def get_dashboard_stats():
+    user_id = request.args.get("userId")
+    if not user_id:
+        return jsonify({"error": "User ID is required."}), 400
+
+    all_data = load_user_performance_data()
+    user_data = all_data.get(str(user_id), {})
+    
+    # --- Calculate Average Scores & Count Completed Exams ---
+    scores = {"listening": {"total_correct": 0, "total_q": 0, "exam_count": 0}, 
+              "reading": {"total_correct": 0, "total_q": 0, "exam_count": 0}}
+
+    for exam in user_data.values():
+        exam_type = exam.get("examType")
+        if exam_type in scores:
+            scores[exam_type]["total_correct"] += exam.get("totalScore", 0)
+            scores[exam_type]["total_q"] += exam.get("totalQuestions", 0)
+            # UPDATED: Simply count each exam entry
+            scores[exam_type]["exam_count"] += 1
+
+    avg_listening = 0
+    if scores["listening"]["total_q"] > 0:
+        avg_listening = round((scores["listening"]["total_correct"] / scores["listening"]["total_q"]) * 100)
+    
+    avg_reading = 0
+    if scores["reading"]["total_q"] > 0:
+        avg_reading = round((scores["reading"]["total_correct"] / scores["reading"]["total_q"]) * 100)
+
+    # --- Get Total Possible Exams ---
+    total_possible_exams = get_total_possible_exams()
+
+    stats = {
+        "listening": {
+            "averageScore": avg_listening,
+            # RENAMED and using new logic
+            "completedExams": scores["listening"]["exam_count"],
+            "totalExams": total_possible_exams["listening"]
+        },
+        "reading": {
+            "averageScore": avg_reading,
+            # RENAMED and using new logic
+            "completedExams": scores["reading"]["exam_count"],
+            "totalExams": total_possible_exams["reading"]
+        }
+    }
+    return jsonify(stats)
 
 if __name__ == '__main__':
     if not os.path.exists(USER_DATA_DIR):

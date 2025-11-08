@@ -196,6 +196,12 @@ export interface ReadingPart5 {
     questions: MultipleChoiceQuestion[];
 }
 
+export interface StatData {
+    averageScore: number;
+    completedExams: number;
+    totalExams: number;
+}
+
 // Union type for any possible Part (UPDATED)
 export type ExamPart = 
   | ListeningPart1 
