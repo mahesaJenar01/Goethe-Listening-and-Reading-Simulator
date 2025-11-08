@@ -30,8 +30,6 @@ export interface DialogueLine {
   line: string;
 }
 
-// --- Listening Exam Part Structures (with new consistent types) ---
-
 export interface ListeningPart1 {
   id: string;
   type: 'listening-part-1'; // CHANGED
@@ -102,8 +100,6 @@ export interface ListeningPart4 {
   };
   questions: SpeakerAssignmentQuestion[];
 }
-
-// --- Reading Exam Part Structures ---
 
 export interface ReadingPart1 {
   id: string;
@@ -223,7 +219,13 @@ export interface DashboardStats {
     };
 }
 
-
+export interface ExamHistoryItem {
+  timestamp: string;
+  examType: 'listening' | 'reading';
+  totalScore: number;
+  totalQuestions: number;
+  date: string;
+}
 
 // Union type for any possible Part (UPDATED)
 export type ExamPart = 

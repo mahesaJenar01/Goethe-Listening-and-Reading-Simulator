@@ -94,27 +94,43 @@ const Dashboard: React.FC = () => {
         )
     };
 
-    if (isLoading) {
-        return <p className="text-center text-slate-600 mt-10">Dashboard wird geladen...</p>;
-    }
-    if (error) {
-        return <p className="text-center text-red-600 font-semibold mt-10">{error}</p>;
-    }
+    if (isLoading) return <p className="text-center text-slate-600 mt-10">Dashboard wird geladen...</p>;
+    if (error) return <p className="text-center text-red-600 font-semibold mt-10">{error}</p>;
 
     return (
         <div className="space-y-12">
+            
+            <div className="text-center bg-white p-10 rounded-2xl shadow-lg border border-slate-200/80">
+                <h2 className="text-3xl font-bold text-slate-800">Starten Sie eine neue Prüfung</h2>
+                <p className="mt-2 text-slate-600">Welchen Teil möchten Sie als Nächstes üben?</p>
+                <div className="mt-8 flex flex-col sm:flex-row justify-center gap-6">
+                    <Link to="/listening/part/1" onClick={handleSelection} className="px-8 py-4 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 bg-sky-600 text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                        Hören üben
+                    </Link>
+                    <Link to="/reading/part/1" onClick={handleSelection} className="px-8 py-4 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 bg-emerald-600 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
+                        Lesen üben
+                    </Link>
+                </div>
+            </div>
+
+            {/* --- 2. WELCOME MESSAGE (With link to history) --- */}
             <div>
                  <h2 className="text-3xl font-bold text-slate-800">Willkommen zurück, {userId}!</h2>
-                 <p className="mt-2 text-slate-600">Hier ist eine Übersicht über Ihren Fortschritt.</p>
+                 <p className="mt-2 text-slate-600">
+                    Hier ist eine Übersicht über Ihren Fortschritt. Oder sehen Sie sich Ihren{' '}
+                    <Link to="/history" className="font-medium text-sky-600 hover:underline">
+                        Prüfungsverlauf
+                    </Link> an.
+                 </p>
             </div>
-            
+
+            {/* --- The rest of the dashboard sections remain in order --- */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {stats && renderStatCard('listening', stats.listening)}
                 {stats && renderStatCard('reading', stats.reading)}
             </div>
 
-            {/* --- NEW: Skill Breakdown Section --- */}
-             {stats && (stats.skillBreakdown.listening.length > 0 || stats.skillBreakdown.reading.length > 0) && (
+            {stats && (stats.skillBreakdown.listening.length > 0 || stats.skillBreakdown.reading.length > 0) && (
                 <div>
                     <h2 className="text-2xl font-bold text-slate-800 text-center mb-6">Leistungsanalyse nach Teil</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -124,26 +140,11 @@ const Dashboard: React.FC = () => {
                 </div>
             )}
 
-
             {stats && stats.performanceTrend.length > 1 && (
                 <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200/80" style={{ height: '400px' }}>
                     <PerformanceChart trendData={stats.performanceTrend} />
                 </div>
             )}
-            
-            <div className="max-w-2xl mx-auto text-center bg-white p-10 rounded-2xl shadow-lg border border-slate-200/80">
-                {/* ... Exam Selection Section remains the same ... */}
-                 <h2 className="text-3xl font-bold text-slate-800">Wählen Sie Ihre Prüfung</h2>
-                <p className="mt-2 text-slate-600">Welchen Teil möchten Sie als Nächstes üben?</p>
-                <div className="mt-8 flex flex-col sm:flex-row justify-center gap-6">
-                    <Link to="/listening/part/1" onClick={handleSelection} className="px-8 py-4 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 bg-sky-600 text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
-                        Hören
-                    </Link>
-                    <Link to="/reading/part/1" onClick={handleSelection} className="px-8 py-4 text-lg font-semibold rounded-lg shadow-md transition-all duration-300 bg-emerald-600 text-white hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500">
-                        Lesen
-                    </Link>
-                </div>
-            </div>
         </div>
     );
 };

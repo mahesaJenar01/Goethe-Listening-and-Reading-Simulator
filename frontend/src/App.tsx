@@ -1,10 +1,12 @@
 import React from 'react';
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import Header from './components/Header';
-import Dashboard from './components/Dashboard';         // NEW: Import Dashboard
+import Dashboard from './components/Dashboard';
 import ExamSession from './components/ExamSession';
 import Auth from './components/Auth';
 import { useAuth } from './contexts/AuthContext';
+import ExamHistory from './components/ExamHistory';
+import DetailedResultsView from './components/DetailedResultsView';
 
 const App: React.FC = () => {
   const location = useLocation();
@@ -23,19 +25,17 @@ const App: React.FC = () => {
         <div className="max-w-4xl mx-auto">
           <Routes>
             {userId ? (
-              // Routes accessible only when logged in
               <>
-                {/* UPDATED: The home route now points to the Dashboard */}
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/:examType/part/:partIndex" element={<ExamSession />} />
-                {/* Redirect any other path to home when logged in */}
+                {/* --- NEW ROUTES --- */}
+                <Route path="/history" element={<ExamHistory />} />
+                <Route path="/history/:examTimestamp" element={<DetailedResultsView />} />
                 <Route path="*" element={<Navigate to="/" />} />
               </>
             ) : (
-              // Routes accessible only when logged out
               <>
                 <Route path="/login" element={<Auth />} />
-                {/* Redirect any other path to login when logged out */}
                 <Route path="*" element={<Navigate to="/login" />} />
               </>
             )}

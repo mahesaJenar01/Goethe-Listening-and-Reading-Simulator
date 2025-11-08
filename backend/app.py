@@ -317,6 +317,79 @@ def get_dashboard_stats():
     }
     return jsonify(stats)
 
+@app.route('/api/exam-history', methods=['GET'])
+def get_exam_history():
+    user_id = request.args.get("userId")
+    if not user_id:
+        return jsonify({"error": "User ID is required."}), 400
+
+    all_data = load_user_performance_data()
+    user_data = all_data.get(str(user_id), {})
+
+    history = []
+    # Sort by timestamp descending to show the most recent first
+    for timestamp, exam in sorted(user_data.items(), reverse=True):
+        history.append({
+            "timestamp": timestamp,
+            "examType": exam.get("examType"),
+            "totalScore": exam.get("totalScore"),
+            "totalQuestions": exam.get("totalQuestions"),
+            "date": datetime.fromisoformat(timestamp).strftime('%d. %B %Y, %H:%M') # e.g., 08. November 2025, 15:30
+        })
+
+    return jsonify(history)
+
+# --- NEW: Detailed Exam Result API Route ---
+@app.route('/api/exam-result/<timestamp>', methods=['GET'])
+def get_exam_result(timestamp):
+    user_id = request.args.get("userId") # Ensure the user owns this result
+    if not user_id:
+        return jsonify({"error": "User ID is required."}), 401
+
+    all_data = load_user_performance_data()
+    user_data = all_data.get(str(user_id), {})
+    saved_exam = user_data.get(timestamp)
+
+    if not saved_exam:
+        return jsonify({"error": "Exam result not found for this user."}), 404
+
+    # Reconstruct the full data needed by the frontend's ResultsView component
+    reconstructed_exam_parts = []
+    all_user_answers = {}
+    
+    saved_parts = saved_exam.get("parts", [])
+    exam_type = saved_exam.get("examType")
+
+    for part_performance in saved_parts:
+        part_id = part_performance.get("partId")
+        if not part_id: continue
+            
+        part_prefix = part_id.split('-')[0]
+        part_number_str = re.sub(r'\D', '', part_prefix)
+        
+        part_data_file = load_part_data(exam_type, int(part_number_str))
+        if not part_data_file: continue
+            
+        original_part_data = part_data_file.get(part_id)
+        if original_part_data:
+            reconstructed_exam_parts.append(original_part_data)
+            
+            for question_result in part_performance.get("questions", []):
+                question_id = question_result.get("questionId")
+                user_answer = question_result.get("userAnswer")
+                if question_id is not None:
+                    all_user_answers[question_id] = user_answer
+
+    final_response = {
+        "score": saved_exam.get("totalScore"),
+        "totalQuestions": saved_exam.get("totalQuestions"),
+        "timeTaken": saved_exam.get("timeTakenInSeconds"),
+        "examParts": reconstructed_exam_parts,
+        "allUserAnswers": all_user_answers
+    }
+
+    return jsonify(final_response)
+
 if __name__ == '__main__':
     if not os.path.exists(USER_DATA_DIR):
         os.makedirs(USER_DATA_DIR)
