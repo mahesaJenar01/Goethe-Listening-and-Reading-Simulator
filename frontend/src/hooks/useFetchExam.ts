@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { ExamAction } from '../components/ExamSession';
+import { ExamAction } from '../state/examState';
 
 const API_BASE_URL = 'http://127.0.0.1:5000';
 
