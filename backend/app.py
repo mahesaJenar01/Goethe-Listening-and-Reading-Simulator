@@ -252,17 +252,41 @@ def get_dashboard_stats():
     all_data = load_user_performance_data()
     user_data = all_data.get(str(user_id), {})
     
-    # --- Calculate Average Scores & Count Completed Exams ---
+    # --- Calculate Average Scores, Count Completed Exams, and Get Performance Trend ---
     scores = {"listening": {"total_correct": 0, "total_q": 0, "exam_count": 0}, 
               "reading": {"total_correct": 0, "total_q": 0, "exam_count": 0}}
+    
+    # --- NEW: Logic for Performance Trend ---
+    performance_trend = []
 
-    for exam in user_data.values():
+    # Sort exams by timestamp (key) to get the most recent ones
+    sorted_exams = sorted(user_data.items())
+
+    for timestamp, exam in sorted_exams:
         exam_type = exam.get("examType")
+        total_score = exam.get("totalScore", 0)
+        total_questions = exam.get("totalQuestions", 1) # Avoid division by zero
+        
         if exam_type in scores:
-            scores[exam_type]["total_correct"] += exam.get("totalScore", 0)
-            scores[exam_type]["total_q"] += exam.get("totalQuestions", 0)
-            # UPDATED: Simply count each exam entry
+            scores[exam_type]["total_correct"] += total_score
+            scores[exam_type]["total_q"] += total_questions
             scores[exam_type]["exam_count"] += 1
+        
+        # Calculate percentage for the trend chart
+        percentage = round((total_score / total_questions) * 100) if total_questions > 0 else 0
+        
+        # Format date for display (e.g., Nov 08)
+        # Using fromisoformat requires Python 3.7+
+        date_obj = datetime.fromisoformat(timestamp)
+        formatted_date = date_obj.strftime('%b %d') # e.g., Nov 08
+
+        performance_trend.append({
+            "date": formatted_date,
+            "score": percentage,
+            "examType": exam_type
+        })
+    
+    # --- End of New Logic ---
 
     avg_listening = 0
     if scores["listening"]["total_q"] > 0:
@@ -272,22 +296,21 @@ def get_dashboard_stats():
     if scores["reading"]["total_q"] > 0:
         avg_reading = round((scores["reading"]["total_correct"] / scores["reading"]["total_q"]) * 100)
 
-    # --- Get Total Possible Exams ---
     total_possible_exams = get_total_possible_exams()
 
     stats = {
         "listening": {
             "averageScore": avg_listening,
-            # RENAMED and using new logic
             "completedExams": scores["listening"]["exam_count"],
             "totalExams": total_possible_exams["listening"]
         },
         "reading": {
             "averageScore": avg_reading,
-            # RENAMED and using new logic
             "completedExams": scores["reading"]["exam_count"],
             "totalExams": total_possible_exams["reading"]
-        }
+        },
+        # NEW: Return the last 7 exams for the trend chart
+        "performanceTrend": performance_trend[-7:] 
     }
     return jsonify(stats)
 

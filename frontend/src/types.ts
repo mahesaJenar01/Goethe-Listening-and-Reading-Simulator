@@ -196,11 +196,24 @@ export interface ReadingPart5 {
     questions: MultipleChoiceQuestion[];
 }
 
+export interface PerformanceTrendData {
+  date: string;
+  score: number;
+  examType: 'listening' | 'reading';
+}
+
 export interface StatData {
     averageScore: number;
     completedExams: number;
     totalExams: number;
 }
+
+export interface DashboardStats {
+    listening: StatData;
+    reading: StatData;
+    performanceTrend: PerformanceTrendData[];
+}
+
 
 // Union type for any possible Part (UPDATED)
 export type ExamPart = 
