@@ -66,30 +66,70 @@ const ExamView: React.FC<ExamViewProps> = ({ examType, currentPart, currentPartI
 
         // Handle listening parts which have a more complex structure
         switch (currentPart.type) {
-            case 'listening-part-1':
-                return (currentPart as ListeningPart1).textBlocks.map((block, blockIndex) => {
-                    const baseQNum = questionCounter + (blockIndex * 2);
-                    const [tfQuestion, mcQuestion] = block.questions;
-                    return (
-                        <React.Fragment key={block.questions[0].id}>
-                            <div className="p-4 bg-slate-100/80 rounded-lg text-slate-600 font-medium">{block.preReadInstruction}</div>
-                            <div className="p-4 bg-white rounded-2xl shadow-lg border border-slate-200/80 space-y-6">
-                                <p className="italic text-slate-600">{block.context}</p>
-                                <TrueFalseCard aufgabe={tfQuestion} questionNumber={baseQNum} userAnswer={props.allUserAnswers[tfQuestion.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
-                                <MultipleChoiceCard aufgabe={mcQuestion} questionNumber={baseQNum + 1} userAnswer={props.allUserAnswers[mcQuestion.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
+            case 'listening-part-1': {
+                const lp1 = currentPart as ListeningPart1;
+                const [exTf, exMc] = lp1.example.questions;
+                return (
+                    <>
+                        {/* --- NEW: Example Rendering --- */}
+                        <div className="space-y-4 opacity-90 mb-6">
+                            <div className="p-4 bg-slate-100 rounded-lg text-slate-600 font-bold flex justify-between items-center">
+                                <span>Beispiel</span>
+                                <span className="text-sm font-normal">{lp1.example.preReadInstruction}</span>
                             </div>
-                        </React.Fragment>
-                    );
-                });
+                            <div className="p-4 bg-white rounded-2xl shadow-lg border border-slate-200/80 space-y-6">
+                                <p className="italic text-slate-600">{lp1.example.context}</p>
+                                <TrueFalseCard aufgabe={exTf} questionNumber={0} userAnswer={exTf.correctAnswer} isSubmitted={true} onAnswerChange={() => {}} />
+                                <MultipleChoiceCard aufgabe={exMc} questionNumber={0} userAnswer={exMc.correctAnswerIndex} isSubmitted={true} onAnswerChange={() => {}} />
+                            </div>
+                        </div>
+
+                        {/* Actual Questions */}
+                        {lp1.textBlocks.map((block, blockIndex) => {
+                            const baseQNum = questionCounter + (blockIndex * 2);
+                            const [tfQuestion, mcQuestion] = block.questions;
+                            return (
+                                <React.Fragment key={block.questions[0].id}>
+                                    <div className="p-4 bg-slate-100/80 rounded-lg text-slate-600 font-medium">{block.preReadInstruction}</div>
+                                    <div className="p-4 bg-white rounded-2xl shadow-lg border border-slate-200/80 space-y-6">
+                                        <p className="italic text-slate-600">{block.context}</p>
+                                        <TrueFalseCard aufgabe={tfQuestion} questionNumber={baseQNum} userAnswer={props.allUserAnswers[tfQuestion.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
+                                        <MultipleChoiceCard aufgabe={mcQuestion} questionNumber={baseQNum + 1} userAnswer={props.allUserAnswers[mcQuestion.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
+                                    </div>
+                                </React.Fragment>
+                            );
+                        })}
+                    </>
+                );
+            }
             case 'listening-part-2':
                 return currentPart.questions.map((q, index) => <MultipleChoiceCard key={q.id} aufgabe={q} questionNumber={questionCounter + index} userAnswer={props.allUserAnswers[q.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />);
             case 'listening-part-3':
                 return currentPart.questions.map((q, index) => <TrueFalseCard key={q.id} aufgabe={q} questionNumber={questionCounter + index} userAnswer={props.allUserAnswers[q.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />);
-            case 'listening-part-4':
-                const p4 = currentPart as ListeningPart4;
-                return p4.questions.map((q, index) => (
-                    <SpeakerAssignmentCard key={q.id} aufgabe={q} speakers={p4.speakers} questionNumber={questionCounter + index} userAnswer={props.allUserAnswers[q.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
-                ));
+            case 'listening-part-4': {
+                const lp4 = currentPart as ListeningPart4;
+                return (
+                    <>
+                        {/* --- NEW: Example Rendering --- */}
+                        <div className="opacity-90 mb-6">
+                            <div className="p-4 bg-slate-100 rounded-lg text-slate-600 font-bold">Beispiel</div>
+                            <SpeakerAssignmentCard 
+                                aufgabe={{...lp4.example, id: 'example-q', type: 'speaker-assignment', explanation: ''}} 
+                                speakers={lp4.speakers} 
+                                questionNumber={0} 
+                                userAnswer={lp4.example.correctAnswer} 
+                                isSubmitted={true} 
+                                onAnswerChange={() => {}} 
+                            />
+                        </div>
+                        
+                        {/* Actual Questions */}
+                        {lp4.questions.map((q, index) => (
+                            <SpeakerAssignmentCard key={q.id} aufgabe={q} speakers={lp4.speakers} questionNumber={questionCounter + index} userAnswer={props.allUserAnswers[q.id]} isSubmitted={false} onAnswerChange={props.handleAnswerChange} />
+                        ))}
+                    </>
+                );
+            }
             default: return <p>Unbekannter Aufgabentyp</p>;
         }
     };
